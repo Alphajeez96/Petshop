@@ -23,22 +23,37 @@
     </section>
 
     <!-- Action Buttons Here -->
-    <section></section>
+    <section class="flex">
+      <div>
+        <Button id="cart-btn" variant="secondary" :classes="buttonClasses">
+          <IconCart />
+          <span class="ml-2">cart (0)</span>
+        </Button>
+      </div>
+
+      <div class="ml-5">
+        <Button id="login-btn" variant="secondary" :classes="buttonClasses"> Login </Button>
+      </div>
+    </section>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
+import Button from '@/components/Button/index.vue'
+import IconCart from '@/components/icons/IconCart.vue'
 import IconDropdown from '@/components/icons/IconDropdown.vue'
 
 const isOpen: Ref<boolean> = ref(false)
 const routes: string[] = ['products', 'promotions', 'blog']
+const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
 const handleRoute = (route: string) => {
   if (route === 'products') {
     isOpen.value = !isOpen.value
   }
-  //route to other pages here
+
+  //route to other pages would go here
 }
 </script>
 
@@ -51,6 +66,10 @@ nav {
 
     li {
       @apply text-white font-medium flex items-center text-xl uppercase w-44 cursor-pointer;
+
+      &:last-child {
+        @apply w-0;
+      }
     }
   }
 }
