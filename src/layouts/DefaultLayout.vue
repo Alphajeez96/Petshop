@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <header>
     <AppNav />
-  </section>
+  </header>
 </template>
 
 <script setup lang="ts">
