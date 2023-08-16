@@ -1,10 +1,7 @@
 <template>
-  <component :is="$route.meta.layout || DefaultLayout">
-    <RouterView />
-  </component>
+  <component :is="$route.meta.layout || DefaultLayout"> </component>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 </script>

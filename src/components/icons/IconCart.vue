@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 interface Cart {
-  height: string
-  width: string
+  height?: string
+  width?: string
 }
 
 withDefaults(defineProps<Cart>(), {

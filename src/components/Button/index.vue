@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import Spinner from '../icons/IconSpinner.vue'
 import { computed } from 'vue'
+import Spinner from '../icons/IconSpinner.vue'
 
 interface Button {
   id: string

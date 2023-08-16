@@ -2,8 +2,16 @@
   <header>
     <AppNav />
   </header>
+
+  <main class="pt-20">
+    <input type="text" />
+    <RouterView />
+  </main>
+
+  <footer></footer>
 </template>
 
 <script setup lang="ts">
-import AppNav from '@/components/partials/AppNav.vue'
+import { RouterView } from 'vue-router'
+import AppNav from '@/components/Partials/AppNav.vue'
 </script>

@@ -41,8 +41,8 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import Button from '@/components/Button/index.vue'
-import IconCart from '@/components/icons/IconCart.vue'
-import IconDropdown from '@/components/icons/IconDropdown.vue'
+import IconCart from '@/components/Icons/IconCart.vue'
+import IconDropdown from '@/components/Icons/IconDropdown.vue'
 
 const isOpen: Ref<boolean> = ref(false)
 const routes: string[] = ['products', 'promotions', 'blog']
@@ -59,7 +59,7 @@ const handleRoute = (route: string) => {
 
 <style lang="scss" scoped>
 nav {
-  @apply h-20 flex items-center justify-between bg-primary-green px-48;
+  @apply h-20 flex items-center justify-between bg-primary-green px-48 fixed top-0 w-full z-50;
 
   ul {
     @apply flex items-center justify-between;
