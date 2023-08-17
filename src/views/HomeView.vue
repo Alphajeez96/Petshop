@@ -6,5 +6,5 @@
 </template>
 
 <script setup lang="ts">
-import Carousel from '@/widgets/Global/Carousel.vue'
+import Carousel from '@/components/Carousel/index.vue'
 </script>
