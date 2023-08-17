@@ -1,23 +1,25 @@
 <template>
   <Carousel
     :items-to-show="itemsToShow"
+    :itemsToScroll="itemsToScroll"
     :wrap-around="wrapAround"
     :autoplay="autoplay"
+    :transition="transition"
     :breakpoints="breakPoints"
   >
-    <Slide v-for="slide in 10" :key="slide">
-      <div class="carousel__item">{{ slide }}</div>
-    </Slide>
+    <template #slides>
+      <slot />
+    </template>
 
     <template #addons>
-      <Navigation />
+      <Navigation v-if="showNavigation" />
     </template>
   </Carousel>
 </template>
 
 <script setup lang="ts">
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
+import { Carousel, Navigation } from 'vue3-carousel'
 
 interface Breakpoint {
   itemsToShow: number
@@ -26,42 +28,24 @@ interface Breakpoint {
 
 interface SliderProps {
   itemsToShow: number
-  wrapAround: boolean
+  itemsToScroll?: number
+  wrapAround?: boolean
   autoplay: number
+  transition: number
+  showNavigation: boolean
   breakPoints?: Record<number, Breakpoint>
 }
 
 withDefaults(defineProps<SliderProps>(), {
   itemsToShow: 1,
-  wrapAround: false,
+  itemsToScroll: 1,
+  wrapAround: true,
   autoplay: 0,
+  transition: 300,
+  showNavigation: false,
   breakPoints: () => ({
     700: { itemsToShow: 3.5, snapAlign: 'center' },
     1024: { itemsToShow: 4, snapAlign: 'start' }
   })
 })
 </script>
-
-<style scoped>
-.carousel__item {
-  min-height: 200px;
-  width: 100%;
-  background-color: green;
-  color: red;
-  font-size: 20px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel__slide {
-  padding: 10px;
-}
-
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  border: 5px solid white;
-}
-</style>
