@@ -4,7 +4,6 @@
   </header>
 
   <main class="pt-20">
-    <input type="text" />
     <RouterView />
   </main>
 

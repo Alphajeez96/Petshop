@@ -6,7 +6,7 @@ export default {
       colors: {
         primary: {
           green: '#4EC690',
-          gray: '#4EC690',
+          gray: '#979797',
           blue: '#2196F3'
         },
         secondary: {
