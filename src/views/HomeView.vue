@@ -1,14 +1,11 @@
 <template>
-  <main class="h-screen">
-    THIS IS HOME: {{ test }}
+  <section class="app__container">
+    <SearchProducts />
 
-    <TextInput id="search-input" type="text" placeholder="eee" variant="secondary" v-model="test" />
-  </main>
+    <div class="border border-red-400 h-40 mt-24">THIS IS THE CONTROL</div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import TextInput from '@/components/TextInput/index.vue'
-import { ref } from 'vue'
-
-const test = ref('')
+import SearchProducts from '@/widgets/Global/SearchProducts.vue'
 </script>

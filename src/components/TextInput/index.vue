@@ -1,6 +1,9 @@
 <template>
   <div class="input__wrapper">
-    <slot name="icon" />
+    <div class="icon__holder" v-if="hasIcon">
+      <slot name="icon" />
+    </div>
+
     <input
       :id="id"
       :type="type"
@@ -30,6 +33,7 @@ interface TextInput {
   variant?: 'primary' | 'secondary'
   disabled?: boolean
   readonly?: boolean
+  hasIcon?: boolean
 }
 
 const props = withDefaults(defineProps<TextInput>(), {
@@ -40,11 +44,13 @@ const props = withDefaults(defineProps<TextInput>(), {
   classes: '',
   variant: 'primary',
   disabled: false,
-  readonly: false
+  readonly: false,
+  hasIcon: false
 })
 
 const computedClasses = computed<string>(() => {
-  return `${props.variant} ${props.classes}`
+  const hasIcon: string = props.hasIcon ? 'icon' : ''
+  return `${props.variant} ${props.classes} ${hasIcon}`
 })
 
 const handleInput = (event: Event) => {
@@ -59,7 +65,7 @@ const handleInput = (event: Event) => {
   @apply relative mx-[0.625rem] inline-block leading-[0.75rem] w-full;
 
   label {
-    @apply text-[#8FDDBD] text-base absolute z-10 left-5 top-[0.75rem] px-1 pointer-events-none bg-white origin-top-left transition-transform duration-150 ease-in;
+    @apply text-[#8FDDBD] text-base absolute z-10 left-5 top-4 px-1 pointer-events-none bg-white origin-top-left transition-transform duration-150 ease-in;
 
     &.active {
       @apply transform -translate-y-full scale-75;
@@ -68,6 +74,14 @@ const handleInput = (event: Event) => {
 
   input {
     @apply h-14 text-base text-black outline-none border border-primary-green px-5 rounded relative w-full;
+
+    &.icon {
+      @apply px-10;
+
+      & + label {
+        @apply left-10;
+      }
+    }
 
     &.secondary {
       @apply border-[#c4c4c4];
@@ -85,7 +99,7 @@ const handleInput = (event: Event) => {
       @apply border-2;
 
       & + label {
-        @apply text-primary-green transform -translate-y-5 scale-75;
+        @apply text-primary-green transform -translate-y-6 scale-75;
       }
 
       &.secondary {
@@ -96,8 +110,8 @@ const handleInput = (event: Event) => {
     }
   }
 
-  slot[name='icon'] {
-    @apply absolute left-[0.625rem] top-[50%] transform -translate-y-1/2;
+  .icon__holder {
+    @apply absolute left-3 top-4 z-10;
   }
 }
 </style>
