@@ -1,5 +1,5 @@
 <template>
-  <section class="app__container">
+  <section class="app-container">
     <HeroSlider />
     <CategoryDisplay />
 
@@ -23,7 +23,7 @@
     <CategoryDisplay />
 
     <!--Best Bits section -->
-    <div class="flex my-28">
+    <div class="flex mt-28 mb-36">
       <div class="self-center w-[52%]">
         <h2 class="text-primary-green text-6xl font-light">Get the best tips</h2>
 
