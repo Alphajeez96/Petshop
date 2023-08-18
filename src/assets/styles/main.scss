@@ -8,9 +8,14 @@ body {
 }
 
 .app__container {
-  @apply w-3/5 mx-auto;
+  @apply w-[70%] mx-auto;
 }
 
+/* CAROUSELL STYLES HERE */
 .carousel__slide {
   padding: 0 !important;
+}
+
+#category-display .carousel__track {
+  height: 410px;
 }

@@ -59,7 +59,7 @@ const handleRoute = (route: string) => {
 
 <style lang="scss" scoped>
 nav {
-  @apply h-20 flex items-center justify-between bg-primary-green px-48 fixed top-0 w-full z-50;
+  @apply h-20 flex items-center justify-between bg-primary-green px-40 fixed top-0 w-full z-50;
 
   ul {
     @apply flex items-center justify-between;

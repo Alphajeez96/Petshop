@@ -1,5 +1,6 @@
 <template>
   <Carousel
+    :id="id"
     :items-to-show="itemsToShow"
     :itemsToScroll="itemsToScroll"
     :wrap-around="wrapAround"
@@ -28,6 +29,7 @@ interface Breakpoint {
 }
 
 interface SliderProps {
+  id?: string
   itemsToShow: number
   itemsToScroll?: number
   wrapAround?: boolean
@@ -39,6 +41,7 @@ interface SliderProps {
 }
 
 withDefaults(defineProps<SliderProps>(), {
+  id: '',
   itemsToShow: 1,
   itemsToScroll: 1,
   wrapAround: true,

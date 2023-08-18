@@ -9,7 +9,7 @@
       <img src="@/assets/images/product.png" class="object-contain" alt="product" />
     </div>
     <div class="product-card__details">
-      <a class="text-black text-xl font-medium underline">Brit care endurance</a>
+      <a>Brit care endurance</a>
       <p class="text-primary-gray pt-1">Animoda</p>
       <p class="text-black text-xl font-medium pt-1">200 Kn</p>
     </div>
@@ -32,7 +32,11 @@ const isHovered: Ref<boolean> = ref(false)
   }
 
   .product-card__details {
-    @apply mx-auto w-5/6 mt-9;
+    @apply mx-auto w-5/6 mt-9 text-left;
+
+    a {
+      @apply text-black text-xl font-medium underline;
+    }
   }
 
   &:hover {

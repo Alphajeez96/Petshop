@@ -1,12 +1,14 @@
 <template>
-  <div class="mt-28 mb-32">
+  <div class="mt-28">
     <h2 class="category-title">Dry dog food</h2>
 
-    <!-- <div class="flex">
-      <ProductCard v-for="i in 3" :key="i" />
-    </div> -->
-
-    <Carousel :items-to-show="3" :autoplay="4000" :show-navigation="true" :transition="600">
+    <Carousel
+      id="category-display"
+      :items-to-show="3"
+      :autoplay="0"
+      :show-navigation="true"
+      :transition="600"
+    >
       <Slide v-for="i in 5" :key="i">
         <ProductCard />
       </Slide>
@@ -15,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import Carousel from '@/components/Carousel/index.vue'
 import { Slide } from 'vue3-carousel'
+import Carousel from '@/components/Carousel/index.vue'
 import ProductCard from '@/components/ProductCard/index.vue'
 </script>
 

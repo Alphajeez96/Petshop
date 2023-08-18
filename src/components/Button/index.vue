@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import Spinner from '../icons/IconSpinner.vue'
+import Spinner from '../Icons/IconSpinner.vue'
 
 interface Button {
   id: string
@@ -50,7 +50,7 @@ const computedClasses = computed<string>(() => {
 
 <style lang="scss" scoped>
 button {
-  @apply flex items-center w-full font-medium focus:outline-none;
+  @apply flex items-center  font-medium focus:outline-none;
 
   &.primary {
     @apply bg-primary-green text-white;

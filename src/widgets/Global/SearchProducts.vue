@@ -1,5 +1,5 @@
 <template>
-  <div class="w-8/12 mx-auto">
+  <div class="w-1/2 mx-auto">
     <TextInput
       id="search-input"
       type="text"
