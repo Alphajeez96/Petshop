@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-9">
+  <div class="mt-11">
     <Carousel
       :items-to-show="1"
       :autoplay="3500"
@@ -26,7 +26,6 @@ import { Slide } from 'vue3-carousel'
   background-color: blue;
   color: red;
   font-size: 20px;
-  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;

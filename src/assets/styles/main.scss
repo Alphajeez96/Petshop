@@ -10,3 +10,7 @@ body {
 .app__container {
   @apply w-3/5 mx-auto;
 }
+
+.carousel__slide {
+  padding: 0 !important;
+}

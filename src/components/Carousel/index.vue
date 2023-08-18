@@ -5,6 +5,7 @@
     :wrap-around="wrapAround"
     :autoplay="autoplay"
     :transition="transition"
+    :pauseAutoplayOnHover="pauseAutoplayOnHover"
     :breakpoints="breakPoints"
   >
     <template #slides>
@@ -32,6 +33,7 @@ interface SliderProps {
   wrapAround?: boolean
   autoplay: number
   transition: number
+  pauseAutoplayOnHover?: boolean
   showNavigation: boolean
   breakPoints?: Record<number, Breakpoint>
 }
@@ -42,10 +44,11 @@ withDefaults(defineProps<SliderProps>(), {
   wrapAround: true,
   autoplay: 0,
   transition: 300,
+  pauseAutoplayOnHover: true,
   showNavigation: false,
   breakPoints: () => ({
-    700: { itemsToShow: 3.5, snapAlign: 'center' },
-    1024: { itemsToShow: 4, snapAlign: 'start' }
+    700: { itemsToShow: 1.5, snapAlign: 'center' },
+    1024: { itemsToShow: 3, snapAlign: 'start' }
   })
 })
 </script>

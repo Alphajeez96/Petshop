@@ -1,6 +1,6 @@
 <template>
-  <div class="input__wrapper">
-    <div class="icon__holder" v-if="hasIcon">
+  <div class="input-wrapper">
+    <div class="icon-holder" v-if="hasIcon">
       <slot name="icon" />
     </div>
 
@@ -61,7 +61,7 @@ const handleInput = (event: Event) => {
 </script>
 
 <style lang="scss" scoped>
-.input__wrapper {
+.input-wrapper {
   @apply relative mx-[0.625rem] inline-block leading-[0.75rem] w-full;
 
   label {
@@ -110,7 +110,7 @@ const handleInput = (event: Event) => {
     }
   }
 
-  .icon__holder {
+  .icon-holder {
     @apply absolute left-3 top-4 z-10;
   }
 }
