@@ -19,3 +19,16 @@ body {
 #category-display .carousel__track {
   height: 410px;
 }
+
+.carousel__prev,
+.carousel__next {
+  width: 5rem !important;
+  height: 5rem !important;
+  margin: 0 -2.25rem !important;
+  color: #bdbdbd !important;
+
+  .carousel__icon {
+    width: 5rem !important;
+    height: 5rem !important;
+  }
+}

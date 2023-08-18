@@ -20,15 +20,20 @@
 </template>
 
 <script setup lang="ts">
-const footerLinks = [
+interface FooterLink {
+  title: string
+  routes: string[]
+}
+
+const footerLinks: FooterLink[] = [
   {
     title: 'Petson',
-    routes: ['About us', 'Blog', 'store locator']
+    routes: ['About us', 'Blog', 'Store locator']
   },
 
   {
     title: 'Contact',
-    routes: ['contact@petson.com', '+385 000 000', '35 Shnauzer avenue, Dogville AL']
+    routes: ['contact@petson.com', '+385 000 000', '35 Schnauzer avenue, Dogville AL']
   },
 
   {
