@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
 const createAxiosInstance = (): AxiosInstance => {
-  const baseURL = 'https://pet-shop.buckhill.com.hr/api/swagger' //Ideally have this in an environment variable
+  const baseURL = 'https://pet-shop.buckhill.com.hr/api/v1' //Ideally have this in an environment variable
   const headers = {
     'Content-Type': 'application/json'
   }
@@ -29,7 +29,6 @@ const createAxiosInstance = (): AxiosInstance => {
         return Promise.reject(error)
       }
 
-      // Handle request error
       return Promise.reject(error)
     }
   )
@@ -44,7 +43,7 @@ const createAxiosInstance = (): AxiosInstance => {
         router.push('/')
       }
 
-      // Handle response error, e.g., logging or showing a notification
+      // Handle response error
       //   Error Handler here
       return Promise.reject(error)
     }

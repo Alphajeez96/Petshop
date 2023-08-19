@@ -1,43 +1,81 @@
 <template>
   <div class="mt-11">
+    <SkeletonLoader v-if="loading" customClasses="h-[400px]" />
+
     <Carousel
+      v-else
       :items-to-show="1"
       :autoplay="3500"
       :show-navigation="false"
       :transition="600"
       :break-points="{}"
     >
-      <Slide v-for="i in 3" :key="i">
-        <div class="carousel__item">{{ i }}</div>
+      <Slide v-for="(slide, i) in slides" :key="i">
+        <div
+          class="carousel-item"
+          :style="{ backgroundImage: `url(${retrieveFile(slide.metadata?.image)})` }"
+        >
+          <div class="text-left p-9">
+            <h1 class="text-6xl font-light content">{{ slide.title }}</h1>
+            <p class="mt-2 text-xl font-medium content">{{ slide.content }}</p>
+          </div>
+        </div>
       </Slide>
     </Carousel>
   </div>
 </template>
 
 <script setup lang="ts">
-import Carousel from '@/components/Carousel/index.vue'
+import { onMounted, ref, type Ref } from 'vue'
 import { Slide } from 'vue3-carousel'
+import { retrieveFile } from '@/utils/global'
+import globalApi from '@/api/globalApi'
+import Carousel from '@/components/Carousel/index.vue'
+import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
+
+const loading: Ref<boolean> = ref(false)
+const slides: Ref<SlideData[]> = ref([])
+
+onMounted(() => {
+  getPromotions()
+})
+
+interface SlideData {
+  title: string
+  content: string
+  metadata: {
+    image: string
+  }
+}
+
+const getPromotions = () => {
+  loading.value = true
+  const { getPromotions } = globalApi()
+
+  getPromotions()
+    .then((response) => {
+      const { data } = response || []
+      slides.value = data.map(({ title, content, metadata }: SlideData) => {
+        return {
+          title,
+          content,
+          metadata
+        }
+      })
+    })
+
+    .finally(() => {
+      loading.value = false
+    })
+}
 </script>
 
-<style scoped>
-.carousel__item {
-  height: 400px;
-  width: 100%;
-  background-color: blue;
-  color: red;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<style lang="scss" scoped>
+.carousel-item {
+  @apply h-[400px] w-full bg-cover bg-no-repeat bg-center relative;
 
-.carousel__slide {
-  padding: 10px;
-}
-
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  border: 5px solid white;
+  .content {
+    @apply text-white  p-[0.75rem] bg-[#00000042] w-fit;
+  }
 }
 </style>
