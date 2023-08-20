@@ -15,7 +15,7 @@
           class="carousel-item"
           :style="{ backgroundImage: `url(${retrieveFile(slide.metadata?.image)})` }"
         >
-          <div class="text-left p-9">
+          <div class="text-left px-10 py-8">
             <h1 class="text-6xl font-light content">{{ slide.title }}</h1>
             <p class="mt-2 text-xl font-medium content">{{ slide.content }}</p>
           </div>
@@ -28,40 +28,27 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue'
 import { Slide } from 'vue3-carousel'
-import { retrieveFile } from '@/utils/global'
+import { type Blob } from '@/types/global'
+import { retrieveFile, retrieveBlobData } from '@/utils/global'
 import globalApi from '@/api/globalApi'
 import Carousel from '@/components/Carousel/index.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
 
 const loading: Ref<boolean> = ref(false)
-const slides: Ref<SlideData[]> = ref([])
+const slides: Ref<Blob[]> = ref([])
 
 onMounted(() => {
-  getPromotions()
+  fetchPromotions()
 })
 
-interface SlideData {
-  title: string
-  content: string
-  metadata: {
-    image: string
-  }
-}
-
-const getPromotions = () => {
+const fetchPromotions = () => {
   loading.value = true
   const { getPromotions } = globalApi()
 
   getPromotions()
     .then((response) => {
       const { data } = response || []
-      slides.value = data.map(({ title, content, metadata }: SlideData) => {
-        return {
-          title,
-          content,
-          metadata
-        }
-      })
+      slides.value = retrieveBlobData(data)
     })
 
     .finally(() => {
