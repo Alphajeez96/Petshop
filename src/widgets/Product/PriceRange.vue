@@ -1,5 +1,5 @@
 <template>
-  <FilterToggle :isOpen="true" title="price">
+  <FilterToggle :isOpen="isOpen" title="price" @click="isOpen = !isOpen">
     <div class="mt-4 w-full">
       <el-slider
         v-model="value"
@@ -10,6 +10,7 @@
       />
     </div>
 
+    <!-- Input Here -->
     <div class="flex justify-end mt-2 relative">
       <div id="price-range">
         <el-input-number v-model="value" :controls="false" />
@@ -24,11 +25,6 @@ import { ref, type Ref } from 'vue'
 import { ElSlider, ElInputNumber } from 'element-plus'
 import FilterToggle from './FilterToggle.vue'
 
+const isOpen: Ref<boolean> = ref(true)
 const value: Ref<number> = ref(0)
 </script>
-
-<style lang="scss" scoped>
-input {
-  @apply rounded bg-inherit w-[78px] h-8 text-sm text-[#0000008a] border border-[#0000003b] px-3 outline-none focus:outline-none;
-}
-</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="mt-28">
-    <h2 class="category-title" @click="$router.push(`/category/${category?.uuid}`)">
+    <h2 class="category-title" @click="$router.push(`/shop/${category?.uuid}`)">
       {{ category?.title }}
     </h2>
 

@@ -9,12 +9,12 @@ const routes = [
   },
 
   {
-    path: '/category/:uuid', // Use a parameter to capture the category UUID
+    path: '/shop/:uuid', // Use a parameter to capture the category UUID
     name: 'category',
     component: CategoryView
   }
 
-  //TODO: names =>  category, products
+  //TODO: names =>  shop, products
 ]
 
 export default routes
