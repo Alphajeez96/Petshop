@@ -19,20 +19,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
+import { watch } from 'vue'
 import { Slide } from 'vue3-carousel'
-import { type Categories, type Product } from '@/types/products'
-import productsApi from '@/api/productsApi'
+import { type Categories } from '@/types/products'
 import Carousel from '@/components/Carousel/index.vue'
 import ProductCard from '@/components/ProductCard/index.vue'
+import { useFetchCategoryProducts } from '@/composables/useProducts'
+
+const { loading, products, fetchCategoryProducts } = useFetchCategoryProducts()
 
 const props = defineProps<{
   isLoading: boolean
   category: Categories
 }>()
-
-const loading: Ref<boolean> = ref(false)
-const products: Ref<Product[]> = ref([])
 
 watch(
   () => props.category,
@@ -42,21 +41,6 @@ watch(
     }
   }
 )
-
-const fetchCategoryProducts = async (id: string) => {
-  try {
-    loading.value = true
-    const { getCategoryProducts } = productsApi()
-    const response = await getCategoryProducts(id)
-    const { data } = response || []
-
-    products.value = data
-  } catch {
-    // No need for specific error handling in this case
-  } finally {
-    loading.value = false
-  }
-}
 </script>
 
 <style lang="scss" scoped>
