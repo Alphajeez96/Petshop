@@ -6,6 +6,7 @@
     <!-- Treat your pup section -->
     <div class="flex mt-28">
       <SkeletonLoader v-if="loading" customClasses="h-[400px]" />
+
       <template v-else>
         <div
           class="w-[55%] h-[400px]"
