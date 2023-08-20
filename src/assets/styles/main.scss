@@ -32,3 +32,46 @@ body {
     height: 5rem !important;
   }
 }
+
+/* SLIDER STYLES HERE */
+
+.el-slider__runway {
+  height: 10px !important;
+  border-radius: 30px !important;
+
+  .el-slider__bar {
+    height: 10px !important;
+    border-top-left-radius: 30px !important ;
+    border-bottom-left-radius: 30px !important;
+    background-color: #0065a8 !important;
+  }
+
+  .el-slider__button-wrapper {
+    top: -14px !important;
+
+    .el-slider__button {
+      border: 1px solid #0000001f !important;
+    }
+  }
+}
+
+/* INPUT STYLES HERE */
+.el-input__wrapper {
+  @apply border border-[#0000003b] outline-none h-8;
+  box-shadow: unset !important;
+  padding: 0.75rem !important;
+}
+
+#price-range {
+  .el-input {
+    @apply w-[78px];
+  }
+
+  .el-input-number {
+    @apply text-left w-[unset];
+  }
+
+  .el-input__inner {
+    @apply text-left;
+  }
+}

@@ -47,3 +47,12 @@ export const debounce = (func: () => void, delay: number): (() => void) => {
     timer = setTimeout(func, delay)
   }
 }
+
+export const parseInputToNumber = (input: string | number): number => {
+  if (input) {
+    const sanitizedValue = input.replace(/[^\d.]/g, '') // Remove non-numeric characters
+    return parseFloat(sanitizedValue) // Parse the sanitized value to a float
+  }
+
+  return 0
+}
