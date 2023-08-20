@@ -7,7 +7,7 @@ const routes = [
     component: HomeView
   }
 
-  //TODO: names =>  category
+  //TODO: names =>  category, products
 ]
 
 export default routes

@@ -26,7 +26,7 @@ import Carousel from '@/components/Carousel/index.vue'
 import ProductCard from '@/components/ProductCard/index.vue'
 import { useFetchCategoryProducts } from '@/composables/useProducts'
 
-const { loading, products, fetchCategoryProducts } = useFetchCategoryProducts()
+const { loading, products, fetchProductList } = useFetchCategoryProducts()
 
 const props = defineProps<{
   isLoading: boolean
@@ -37,7 +37,7 @@ watch(
   () => props.category,
   (newCategory) => {
     if (newCategory.uuid) {
-      fetchCategoryProducts(newCategory.uuid)
+      fetchProductList(`?category=${newCategory.uuid}`)
     }
   }
 )

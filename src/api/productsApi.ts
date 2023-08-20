@@ -5,7 +5,7 @@ export default () => ({
     return await $axios.get('/categories')
   },
 
-  async getCategoryProducts(category: string) {
-    return await $axios.get(`/products?category=${category}`)
+  async getProductList(searchParam: string) {
+    return await $axios.get(`/products${searchParam}`)
   }
 })
