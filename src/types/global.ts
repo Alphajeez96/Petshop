@@ -1,6 +1,6 @@
 export interface Blob {
   title: string
-  content: string
+  content?: string
   metadata: {
     image: string
   }

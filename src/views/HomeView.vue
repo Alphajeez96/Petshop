@@ -1,7 +1,7 @@
 <template>
   <section class="app-container">
     <HeroSlider />
-    <CategoryDisplay />
+    <CategoryDisplay :isLoading="isLoading" :category="categories[0] || {}" />
 
     <!-- Treat your pup section -->
     <div class="flex mt-28">
@@ -29,7 +29,7 @@
       </template>
     </div>
 
-    <CategoryDisplay />
+    <CategoryDisplay :isLoading="isLoading" :category="categories[1] || {}" />
 
     <!--Best Bits section -->
     <div class="flex mt-28 mb-36">
@@ -62,31 +62,55 @@
 <script setup lang="ts">
 import { ref, onMounted, type Ref } from 'vue'
 import { type Blob } from '@/types/global'
+import { type Categories } from '@/types/products'
 import { retrieveFile, retrieveBlobData, getRandomArraySubset, trimText } from '@/utils/global'
 import globalApi from '@/api/globalApi'
 import HeroSlider from '@/widgets/Home/HeroSlider.vue'
 import CategoryDisplay from '@/widgets/Home/CategoryDisplay.vue'
 import Button from '@/components/Button/index.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
+import productsApi from '@/api/productsApi'
 
 const loading: Ref<boolean> = ref(false)
+const isLoading: Ref<boolean> = ref(false)
 const blogs: Ref<Blob[]> = ref([])
+const categories: Ref<Categories[]> = ref([])
 
 onMounted(() => {
-  fetchBlogPosts()
+  fetchData()
 })
 
-const fetchBlogPosts = () => {
-  loading.value = true
-  const { getBlogPosts } = globalApi()
+const fetchData = async () => {
+  await Promise.all([fetchBlogPosts(), fetchAllCategories()])
+}
 
-  getBlogPosts()
-    .then((response) => {
-      blogs.value = getRandomArraySubset(retrieveBlobData(response.data), 2)
-    })
+const fetchBlogPosts = async () => {
+  try {
+    loading.value = true
+    const { getBlogPosts } = globalApi()
+    const response = await getBlogPosts()
+    const { data } = response || []
 
-    .finally(() => {
-      loading.value = false
-    })
+    blogs.value = getRandomArraySubset(retrieveBlobData(data), 2)
+  } catch {
+    // No need for specific error handling in this case
+  } finally {
+    loading.value = false
+  }
+}
+
+const fetchAllCategories = async () => {
+  try {
+    isLoading.value = true
+    const { getAllCategories } = productsApi()
+    const response = await getAllCategories()
+    const { data } = response || []
+
+    categories.value = getRandomArraySubset(data, 2)
+  } catch {
+    // No need for specific error handling in this case
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>

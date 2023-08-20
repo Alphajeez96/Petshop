@@ -41,19 +41,19 @@ onMounted(() => {
   fetchPromotions()
 })
 
-const fetchPromotions = () => {
-  loading.value = true
-  const { getPromotions } = globalApi()
+const fetchPromotions = async () => {
+  try {
+    loading.value = true
+    const { getPromotions } = globalApi()
+    const response = await getPromotions()
+    const { data } = response || []
 
-  getPromotions()
-    .then((response) => {
-      const { data } = response || []
-      slides.value = retrieveBlobData(data)
-    })
-
-    .finally(() => {
-      loading.value = false
-    })
+    slides.value = retrieveBlobData(data)
+  } catch {
+    // No need for specific error handling in this case
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 

@@ -1,18 +1,27 @@
 <template>
+  <SkeletonLoader customClasses="h-[398px] w-[288px] mr-8" v-if="loading" />
   <article
+    v-else
     class="product-card"
     :class="{ 'hover-animation': isHovered, 'has-button': hasButton }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false"
   >
     <div class="product-card__image">
-      <img src="@/assets/images/product.png" class="object-contain" alt="product" />
+      <img
+        :src="retrieveFile(product?.metadata?.image)"
+        class="h-[inherit] object-contain"
+        :alt="product?.title"
+        loading="lazy"
+      />
     </div>
 
     <div class="product-card__details">
-      <a>Brit care endurance</a>
-      <p class="text-primary-gray pt-1">Animoda</p>
-      <p class="text-black text-xl font-medium pt-1">200 Kn</p>
+      <a :title="product?.title">{{ trimText(product?.title, 20) }}</a>
+      <p class="text-primary-gray pt-1" :title="productCategory">
+        {{ productCategory }}
+      </p>
+      <p class="text-black text-xl font-medium pt-1">{{ product?.price }} Kn</p>
 
       <!-- Action Button Here -->
       <div class="mt-3" v-if="hasButton">
@@ -26,21 +35,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
+import { type Product } from '@/types/products'
+import { trimText, capitalizeText, retrieveFile } from '@/utils/global'
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
-import { type Product } from '@/types/products'
+import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
 
-interface ProductCard extends Product {
+const props = defineProps<{
   hasButton?: boolean
-}
+  loading: boolean
+  product: Product
+}>()
 
-withDefaults(defineProps<ProductCard>(), {
-  hasButton: false,
-  title: '',
-  category: '',
-  price: '',
-  image: ''
+const productCategory = computed(() => {
+  return capitalizeText(trimText(props.product?.category?.title!, 30))
 })
 
 const isHovered: Ref<boolean> = ref(false)

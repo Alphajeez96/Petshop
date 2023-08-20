@@ -6,6 +6,8 @@ const routes = [
     name: 'home',
     component: HomeView
   }
+
+  //TODO: names =>  category
 ]
 
 export default routes

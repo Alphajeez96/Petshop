@@ -17,7 +17,7 @@ defineProps<Skeleton>()
   height: 300px;
   background-color: #ddd;
   opacity: 0.6;
-  animation: pulse-bg 2s ease-in-out infinite normal both;
+  animation: pulse-bg 1.5s ease-in-out infinite normal both;
 }
 
 @keyframes pulse-bg {
