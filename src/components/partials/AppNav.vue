@@ -1,52 +1,63 @@
 <template>
+  <aside>
+    <Modal
+      :is-open="isModal"
+      id="auth-modal"
+      :label="label"
+      :describedBy="label"
+      parentElementIdentifier="nav"
+      @close="isModal = false"
+    >
+      MODAL
+    </Modal>
+  </aside>
+
   <nav>
-    <!-- Logo Here -->
-    <section>
-      <img
-        src="@/assets/images/logo-white.svg"
-        alt="Petson"
-        class="cursor-pointer"
-        @click="$router.push('/')"
-      />
-    </section>
+    <img
+      src="@/assets/images/logo-white.svg"
+      alt="Petson"
+      class="cursor-pointer"
+      @click="$router.push('/')"
+    />
 
     <!-- Routes Here -->
-    <section>
-      <ul>
-        <li v-for="(route, i) in routes" :key="i" @click="handleRoute(route)">
-          {{ route }}
-          <span v-if="i === 0" class="ml-0.5">
-            <IconDropdown :isOpen="isOpen" />
-          </span>
-        </li>
-      </ul>
-    </section>
+    <ul>
+      <li v-for="(route, i) in routes" :key="i" @click="handleRoute(route)">
+        {{ route }}
+        <span v-if="i === 0" class="ml-0.5">
+          <IconDropdown :isOpen="isOpen" />
+        </span>
+      </li>
+    </ul>
 
     <!-- Action Buttons Here -->
-    <section class="flex">
-      <div>
-        <Button id="cart-btn" variant="secondary" :classes="buttonClasses">
-          <IconCart />
-          <span class="ml-2">cart (0)</span>
-        </Button>
-      </div>
+    <div class="flex">
+      <Button id="cart-btn" variant="secondary" :classes="buttonClasses">
+        <IconCart />
+        <span class="ml-2">cart (0)</span>
+      </Button>
 
       <div class="ml-5">
-        <Button id="login-btn" variant="secondary" :classes="buttonClasses"> Login </Button>
+        <Button id="login-btn" variant="secondary" :classes="buttonClasses" @click="isModal = true">
+          Login
+        </Button>
       </div>
-    </section>
+    </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import Button from '@/components/Button/index.vue'
-import IconCart from '@/components/Icons/IconCart.vue'
-import IconDropdown from '@/components/Icons/IconDropdown.vue'
+import { ref, computed, type Ref } from 'vue'
 
+const modalType: Ref<string> = ref('login')
+const isModal: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(false)
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
+
+const label = computed(() => {
+  return `${modalType.value} modal`
+})
 
 const handleRoute = (route: string) => {
   if (route === 'products') {
