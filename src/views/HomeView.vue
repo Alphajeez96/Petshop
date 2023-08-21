@@ -5,7 +5,7 @@
 
     <!-- Treat your pup section -->
     <div class="flex mt-28">
-      <SkeletonLoader v-if="loading" customClasses="h-[400px]" />
+      <SkeletonLoader v-if="loading" customClasses="h-[400px] w-[55%]" />
 
       <template v-else>
         <div
@@ -33,7 +33,7 @@
 
     <!--Best Bits section -->
     <div class="flex mt-28 mb-36">
-      <SkeletonLoader v-if="loading" customClasses="h-[400px]" />
+      <SkeletonLoader v-if="loading" customClasses="h-[400px] w-[55%]" />
 
       <template v-else>
         <div class="self-center w-1/2">

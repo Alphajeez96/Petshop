@@ -3,11 +3,9 @@
 </template>
 
 <script setup lang="ts">
-interface Skeleton {
+defineProps<{
   customClasses: string
-}
-
-defineProps<Skeleton>()
+}>()
 </script>
 
 <style scoped>
