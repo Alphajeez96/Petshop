@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, type Ref } from 'vue'
+import { ref, onMounted, watch, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { type Breadcrumb } from '@/types/global'
 import { type Product } from '@/types/products'
@@ -71,16 +71,25 @@ const route = useRoute()
 const loading: Ref<boolean> = ref(false)
 const quantity: Ref<number> = ref(0)
 const product: Ref<Product | undefined> = ref(undefined)
-const breadCrumbs: Ref<Breadcrumb[]> = ref([{ title: 'Homepage', path: '/' }])
+const breadCrumbs: Ref<Breadcrumb[]> = ref([])
 
 onMounted(() => {
   getProductDetails()
   scrollToTop()
 })
 
+watch(
+  () => route.params.uuid,
+  (newUuid) => {
+    if (newUuid) getProductDetails()
+  }
+)
+
 const getProductDetails = async () => {
   try {
     loading.value = true
+    breadCrumbs.value = []
+
     const { getSingleProduct } = productsApi()
     const response = await getSingleProduct(route.params.uuid as string)
     const { data } = response
@@ -88,6 +97,7 @@ const getProductDetails = async () => {
     product.value = data
 
     breadCrumbs.value.push(
+      { title: 'Homepage', path: '/' },
       { title: data.category?.title, path: `/shop/${data.category?.uuid}` },
       { title: trimText(data.title, 40), path: '' }
     )
