@@ -1,6 +1,8 @@
 <template>
-  <section class="mt-10 flex justify-between">
-    <p v-for="i in 3" :key="i">TEST</p>
+  <section class="mt-10 flex flex-wrap gap-9">
+    <div v-for="product in products" :key="product?.uuid">
+      <ProductCard :loading="loading" :product="product" :hasButton="true" />
+    </div>
   </section>
 </template>
 
@@ -9,7 +11,7 @@ import ProductCard from '@/components/ProductCard/index.vue'
 import { type Product } from '@/types/products'
 
 defineProps<{
-  loading?: boolean
-  products?: Product[]
+  loading: boolean
+  products: Product[]
 }>()
 </script>

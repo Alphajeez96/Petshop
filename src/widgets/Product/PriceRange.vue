@@ -13,7 +13,11 @@
     <!-- Input Here -->
     <div class="flex justify-end mt-2 relative">
       <div id="price-range">
-        <el-input-number v-model="value" :controls="false" />
+        <el-input-number
+          v-model="value"
+          :controls="false"
+          @change="$emit('change', `&price=${value}`)"
+        />
       </div>
       <span class="flex items-center h-8 px-3.5 absolute text-sm text-[#0000008a] z-50">kn</span>
     </div>

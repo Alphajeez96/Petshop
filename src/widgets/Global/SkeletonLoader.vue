@@ -12,10 +12,7 @@ defineProps<Skeleton>()
 
 <style scoped>
 .p-skeleton {
-  content: ' ';
-  width: 100%;
-  background-color: #ddd;
-  opacity: 0.6;
+  @apply content-[''] bg-[#ddd] opacity-60;
   animation: pulse-bg 1.5s ease-in-out infinite normal both;
 }
 

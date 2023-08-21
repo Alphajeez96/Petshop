@@ -1,5 +1,6 @@
 <template>
-  <SkeletonLoader customClasses="h-[398px] w-[288px] mr-8" v-if="loading" />
+  <SkeletonLoader customClasses="h-[398px] w-[288px]" v-if="loading" />
+
   <article
     v-else
     class="product-card"
@@ -26,8 +27,8 @@
       <!-- Action Button Here -->
       <div class="mt-3" v-if="hasButton">
         <Button id="cart-btn" class="rounded" classes="h-[30px] px-4 rounded">
-          <IconCart />
-          <span class="ml-2">add to cart</span>
+          <IconCart height="16" width="16" />
+          <span class="ml-2 uppercase text-[13px] font-medium">add to cart</span>
         </Button>
       </div>
     </div>
