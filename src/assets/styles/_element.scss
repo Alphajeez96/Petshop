@@ -46,20 +46,14 @@
   .el-input {
     margin: auto !important;
     width: 132px;
-    // width: 67px;
-    // border: 1px solid red;
   }
 
-  // border border-[#0000003b]
-
   .el-input__wrapper {
-    // border-radius: 4px;
     height: 48px;
-    // border: 1px solid #0000003b;
     box-shadow: none !important;
 
     &.is-focus {
-      // box-shadow: none !important;
+      box-shadow: none !important;
     }
 
     .el-input__inner {
@@ -81,7 +75,7 @@
     .el-input-number__decrease,
     .el-input-number__increase {
       border-radius: 4px !important;
-      background-color: #f4f6f5 !important;
+      background: #f4f6f5 !important;
       font-size: 1rem !important;
       color: #979797 !important;
       border-left: none !important;
@@ -118,6 +112,7 @@
   border-radius: unset !important;
   padding: 0 !important;
   outline: none !important;
+  box-shadow: unset !important;
 
   &.is-focus {
     box-shadow: unset !important;

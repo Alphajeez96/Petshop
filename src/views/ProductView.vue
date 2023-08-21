@@ -95,7 +95,6 @@ const getProductDetails = async () => {
     const { data } = response
 
     product.value = data
-
     breadCrumbs.value.push(
       { title: 'Homepage', path: '/' },
       { title: data.category?.title, path: `/shop/${data.category?.uuid}` },

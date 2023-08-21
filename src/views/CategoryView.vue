@@ -45,7 +45,7 @@ const page = ref(1)
 const limit = ref(15)
 const sort = ref(false)
 
-const searchParam = ref(`?type=${segment.value}=${route.params.uuid}`)
+const searchParam = ref(`?${segment.value}=${route.params.uuid}`)
 
 // let searchParam = ref(
 //   `?${segment.value}=${route?.params?.uuid}&price=${price.value}&page=${page.value}&limit=${limit.value}&desc=${sort.value}`
