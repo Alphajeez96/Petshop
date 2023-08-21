@@ -7,5 +7,9 @@ export default () => ({
 
   async getProductList(searchParam: string) {
     return await $axios.get(`/products${searchParam}`)
+  },
+
+  async getAllBrands() {
+    return await $axios.get('/brands')
   }
 })

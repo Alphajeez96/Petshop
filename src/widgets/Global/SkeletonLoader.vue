@@ -14,7 +14,6 @@ defineProps<Skeleton>()
 .p-skeleton {
   content: ' ';
   width: 100%;
-  height: 300px;
   background-color: #ddd;
   opacity: 0.6;
   animation: pulse-bg 1.5s ease-in-out infinite normal both;

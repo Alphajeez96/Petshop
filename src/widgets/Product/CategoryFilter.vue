@@ -1,9 +1,14 @@
 <template>
-  <FilterToggle :isOpen="isOpen" title="brand" @click="isOpen = !isOpen">
+  <FilterToggle :isOpen="isOpen" title="category" @click="isOpen = !isOpen">
     <SkeletonLoader customClasses="h-12 mt-4" v-if="loading" />
 
-    <div v-else class="mt-4 flex items-center w-full" v-for="brand in brands" :key="brand?.uuid">
-      <a class="cursor-pointer text-[#0000008a]">{{ capitalizeText(brand?.title) }}</a>
+    <div
+      v-else
+      class="mt-4 flex items-center w-full"
+      v-for="category in categories"
+      :key="category?.uuid"
+    >
+      <a class="cursor-pointer text-[#0000008a]">{{ capitalizeText(category?.title) }}</a>
     </div>
   </FilterToggle>
 </template>
@@ -18,20 +23,22 @@ import productsApi from '@/api/productsApi'
 
 const loading: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(true)
-const brands: Ref<Categories[]> = ref([])
+const categories: Ref<Categories[]> = ref([])
 
 onMounted(() => {
-  fetchAllBrands()
+  fetchAllCategories()
 })
 
-const fetchAllBrands = async () => {
+const fetchAllCategories = async () => {
   try {
     loading.value = true
-    const { getAllBrands } = productsApi()
-    const response = await getAllBrands()
+    const { getAllCategories } = productsApi()
+    const response = await getAllCategories()
     const { data } = response || []
 
-    brands.value = data
+    console.log('CATEGORIES::', data)
+
+    categories.value = data
   } catch {
     // No need for specific error handling in this case
   } finally {

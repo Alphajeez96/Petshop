@@ -4,8 +4,8 @@
       <el-slider
         v-model="value"
         :show-tooltip="false"
-        :step="100"
-        :max="5000"
+        :step="1000"
+        :max="40000"
         label="price range"
       />
     </div>
