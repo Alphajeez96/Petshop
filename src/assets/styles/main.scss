@@ -29,6 +29,22 @@ input:-webkit-autofill:active {
     0px 2px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
+.transparent-scroll {
+  @apply overflow-auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-transparent rounded;
+  }
+
+  & ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#00000033];
+  }
+}
+
 /* CAROUSELL STYLES HERE */
 .carousel__slide {
   padding: 0 !important;

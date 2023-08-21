@@ -56,9 +56,9 @@ import Modal from '@/components/Modal/index.vue'
 import LoginForm from '@/widgets/Home/LoginForm.vue'
 import SignupForm from '@/widgets/Home/SignupForm.vue'
 
-const isModal: Ref<boolean> = ref(true)
+const isModal: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(false)
-const modalType: Ref<string> = ref('signup')
+const modalType: Ref<string> = ref('login')
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
@@ -74,7 +74,6 @@ const handleRoute = (route: string) => {
   if (route === 'products') {
     isOpen.value = !isOpen.value
   }
-
   //route to other pages would go here
 }
 </script>

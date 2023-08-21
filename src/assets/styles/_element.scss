@@ -92,6 +92,8 @@
 .el-checkbox__label {
   font-size: 1rem !important;
   color: #000000de !important;
+  padding-left: 0.75rem !important;
+  line-height: 1.5rem !important;
 }
 
 .el-checkbox__inner {
@@ -100,10 +102,14 @@
   border: 1px solid #979797 !important;
 
   &::after {
-    left: 9px !important;
-    top: 5px !important;
+    left: 7px !important;
+    top: 3px !important;
     height: 9px !important;
   }
+}
+
+.el-checkbox {
+  white-space: unset !important;
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner {
