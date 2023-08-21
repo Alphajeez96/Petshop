@@ -2,6 +2,7 @@ import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import errorHandler from './plugins/errorHandler'
 
 const createAxiosInstance = (): AxiosInstance => {
   const baseURL = 'https://pet-shop.buckhill.com.hr/api/v1' //Ideally have this in an environment variable
@@ -43,10 +44,9 @@ const createAxiosInstance = (): AxiosInstance => {
         router.push('/')
       }
 
-      console.log('ERR TRACK::', error)
-
       // Handle response error
       //   Error Handler here
+      errorHandler(error)
       return Promise.reject(error)
     }
   )
