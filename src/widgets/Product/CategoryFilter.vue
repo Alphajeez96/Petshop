@@ -36,8 +36,6 @@ const fetchAllCategories = async () => {
     const response = await getAllCategories()
     const { data } = response || []
 
-    console.log('CATEGORIES::', data)
-
     categories.value = data
   } catch {
     // No need for specific error handling in this case

@@ -5,3 +5,8 @@ export interface Blob {
     image: string
   }
 }
+
+export interface Breadcrumb {
+  title: string
+  path: string
+}

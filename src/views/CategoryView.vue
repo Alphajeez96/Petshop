@@ -7,14 +7,58 @@
       <CategoryFilter class="mt-14" />
     </aside>
 
-    <div class="h-screen">
+    <div class="h-screen w-[65%]">
       <h2 class="text-6xl text-primary-green font-light">DRY DOG FOOD</h2>
+
+      <!-- Sort Region Here -->
+      <div class="mt-14 flex items-center">
+        <BreadcrumbVue :breadcrumbs="path" />
+        <div class="ml-auto">
+          <PriceSort />
+        </div>
+      </div>
+
+      <!-- Product Display -->
+      <ProductDisplay />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { type Breadcrumb } from '@/types/global'
 import PriceRange from '@/widgets/Product/PriceRange.vue'
 import BrandFilter from '@/widgets/Product/BrandFilter.vue'
 import CategoryFilter from '@/widgets/Product/CategoryFilter.vue'
+import BreadcrumbVue from '@/widgets/Global/Breadcrumb.vue'
+import PriceSort from '@/widgets/Product/PriceSort.vue'
+import ProductDisplay from '@/widgets/Product/ProductDisplay.vue'
+import { useFetchCategoryProducts } from '@/composables/useProducts'
+import { useRoute } from 'vue-router'
+
+const { loading, products, fetchProductList } = useFetchCategoryProducts()
+
+const route = useRoute()
+const segment = ref('category')
+const price = ref(0)
+const page = ref(1)
+const limit = ref(15)
+const sort = ref(false)
+
+const searchParam = `?${segment.value}=${route?.params?.uuid}&price=${price.value}&page=${page.value}&limit=${limit.value}&desc=${sort.value}`
+
+onMounted(() => {
+  fetchProductList(searchParam)
+})
+
+console.log('PRD:::', products)
+
+// ?category=f4f399c0-db91-3c96-88e2-0bfce3fe06a8&price=0&page=1&limit=15&sortBy=&desc=false
+
+console.log('ROUTE:::', route)
+
+const path: Breadcrumb[] = [
+  { title: 'Homepage', path: '/' },
+  { title: 'test 2', path: 'test2' }
+]
 </script>

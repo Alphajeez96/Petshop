@@ -25,6 +25,8 @@ import { ref, type Ref } from 'vue'
 import { ElSlider, ElInputNumber } from 'element-plus'
 import FilterToggle from './FilterToggle.vue'
 
+defineEmits(['change'])
+
 const isOpen: Ref<boolean> = ref(true)
 const value: Ref<number> = ref(0)
 </script>
