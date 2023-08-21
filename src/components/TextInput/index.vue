@@ -15,7 +15,7 @@
       v-bind="$attrs"
       @input="handleInput"
     />
-    <label :for="id">{{ placeholder }}</label>
+    <label :for="id" :class="{ active: hasValue }">{{ placeholder }}</label>
   </div>
 </template>
 
@@ -53,6 +53,8 @@ const computedClasses = computed<string>(() => {
   return `${props.variant} ${props.classes} ${hasIcon}`
 })
 
+const hasValue = computed(() => props.modelValue)
+
 const handleInput = (event: Event) => {
   if (event.target) {
     emit('update:modelValue', (event.target as HTMLInputElement).value)
@@ -62,7 +64,7 @@ const handleInput = (event: Event) => {
 
 <style lang="scss" scoped>
 .input-wrapper {
-  @apply relative mx-[0.625rem] inline-block leading-[0.75rem] w-full;
+  @apply relative inline-block leading-[0.75rem] w-full;
 
   label {
     @apply text-[#8FDDBD] text-base absolute z-10 left-5 top-4 px-1 pointer-events-none bg-white origin-top-left transition-transform duration-150 ease-in;

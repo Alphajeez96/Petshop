@@ -30,7 +30,7 @@
         <div v-else class="mt-12">
           <h2 class="text-[#000000de] text-6xl">{{ product?.price }} Kn</h2>
           <div class="flex mt-7">
-            <Button id="product-cart" classes="px-5 h-12 rounded">
+            <Button id="product-cart" classes="px-5 h-12 rounded box-shadow">
               <IconCart />
               <span class="ml-2 uppercase text-[0.938rem] font-medium">add to cart</span>
             </Button>

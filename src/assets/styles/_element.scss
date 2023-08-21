@@ -89,6 +89,27 @@
   }
 }
 
+.el-checkbox__label {
+  font-size: 1rem !important;
+  color: #000000de !important;
+}
+
+.el-checkbox__inner {
+  height: 20px !important;
+  width: 20px !important;
+  border: 1px solid #979797 !important;
+
+  &::after {
+    left: 9px !important;
+    top: 5px !important;
+    height: 9px !important;
+  }
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #000 !important;
+}
+
 /* BREAD-CRUMB STYLES HERE */
 
 .el-breadcrumb {

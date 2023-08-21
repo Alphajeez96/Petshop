@@ -8,7 +8,8 @@
       parentElementIdentifier="nav"
       @close="isModal = false"
     >
-      MODAL
+      <LoginForm v-if="modalType === 'login'" @updateModal="updateModalType" />
+      <SignupForm v-else @updateModal="updateModalType" />
     </Modal>
   </aside>
 
@@ -48,16 +49,26 @@
 
 <script setup lang="ts">
 import { ref, computed, type Ref } from 'vue'
+import Button from '@/components/Button/index.vue'
+import IconCart from '@/components/Icons/IconCart.vue'
+import IconDropdown from '@/components/Icons/IconDropdown.vue'
+import Modal from '@/components/Modal/index.vue'
+import LoginForm from '@/widgets/Home/LoginForm.vue'
+import SignupForm from '@/widgets/Home/SignupForm.vue'
 
-const modalType: Ref<string> = ref('login')
-const isModal: Ref<boolean> = ref(false)
+const isModal: Ref<boolean> = ref(true)
 const isOpen: Ref<boolean> = ref(false)
+const modalType: Ref<string> = ref('signup')
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
 const label = computed(() => {
   return `${modalType.value} modal`
 })
+
+const updateModalType = (value: string) => {
+  modalType.value = value
+}
 
 const handleRoute = (route: string) => {
   if (route === 'products') {
