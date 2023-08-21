@@ -43,6 +43,8 @@ const createAxiosInstance = (): AxiosInstance => {
         router.push('/')
       }
 
+      console.log('ERR TRACK::', error)
+
       // Handle response error
       //   Error Handler here
       return Promise.reject(error)

@@ -34,6 +34,7 @@ interface TextInput {
   disabled?: boolean
   readonly?: boolean
   hasIcon?: boolean
+  error?: boolean
 }
 
 const props = withDefaults(defineProps<TextInput>(), {
@@ -45,12 +46,14 @@ const props = withDefaults(defineProps<TextInput>(), {
   variant: 'primary',
   disabled: false,
   readonly: false,
-  hasIcon: false
+  hasIcon: false,
+  error: false
 })
 
 const computedClasses = computed<string>(() => {
   const hasIcon: string = props.hasIcon ? 'icon' : ''
-  return `${props.variant} ${props.classes} ${hasIcon}`
+  const error: string = props.error ? 'invalid' : ''
+  return `${props.variant} ${props.classes} ${hasIcon} ${error}`
 })
 
 const hasValue = computed(() => props.modelValue)

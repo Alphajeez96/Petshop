@@ -6,7 +6,7 @@
       :label="label"
       :describedBy="label"
       parentElementIdentifier="nav"
-      @close="isModal = false"
+      @close="closeModal"
     >
       <LoginForm v-if="modalType === 'login'" @updateModal="updateModalType" />
       <SignupForm v-else @updateModal="updateModalType" />
@@ -68,6 +68,11 @@ const label = computed(() => {
 
 const updateModalType = (value: string) => {
   modalType.value = value
+}
+
+const closeModal = () => {
+  isModal.value = false
+  modalType.value = 'login'
 }
 
 const handleRoute = (route: string) => {

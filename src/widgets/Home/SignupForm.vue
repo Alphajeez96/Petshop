@@ -3,7 +3,7 @@
     <img src="@/assets/images/logo-round.svg" class="m-auto" alt="logo" />
     <h5 class="text-[#000000de] text-2xl py-6 text-center">Sign up</h5>
 
-    <form class="w-[82%] m-auto">
+    <form @submit.prevent="createUser" class="w-[82%] m-auto">
       <!-- Name Region -->
       <div class="form-group">
         <div class="flex gap-6">
@@ -14,6 +14,7 @@
             placeholder="First Name *"
             autocomplete="off"
             v-model="payload.first_name"
+            :error="v$.first_name.$error"
           />
 
           <TextInput
@@ -23,6 +24,7 @@
             placeholder="Last Name *"
             autocomplete="off"
             v-model="payload.last_name"
+            :error="v$.last_name.$error"
           />
         </div>
       </div>
@@ -36,6 +38,7 @@
           placeholder="Email Adderss *"
           autocomplete="off"
           v-model="payload.email"
+          :error="v$.email.$error"
         />
       </div>
 
@@ -47,6 +50,7 @@
           variant="secondary"
           placeholder="Phone Number *"
           v-model="payload.phone_number"
+          :error="v$.phone_number.$error"
         />
       </div>
 
@@ -58,6 +62,7 @@
           variant="secondary"
           placeholder="Address *"
           v-model="payload.address"
+          :error="v$.address.$error"
         />
       </div>
 
@@ -70,6 +75,7 @@
           placeholder="Password *"
           autocomplete="off"
           v-model="payload.password"
+          :error="v$.password.$error"
         />
       </div>
 
@@ -82,6 +88,7 @@
           placeholder="Confirm Password *"
           autocomplete="off"
           v-model="payload.password_confirmation"
+          :error="v$.password_confirmation.$error"
         />
       </div>
 
@@ -89,7 +96,13 @@
         <el-checkbox v-model="payload.is_marketing" :label="label" size="large" />
       </div>
 
-      <Button id="login-button" classes="h-9 rounded w-full box-shadow" class="h-9">
+      <Button
+        type="submit"
+        id="signup-button"
+        classes="h-9 rounded w-full box-shadow"
+        class="h-9"
+        :loading="loading"
+      >
         <span class="text-white font-medium text-[0.938rem] w-full">SIGN UP</span>
       </Button>
 
@@ -103,20 +116,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import { type SignUp } from '@/types/global'
+import { reactive, computed, ref, type Ref } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email, sameAs } from '@vuelidate/validators'
+import { type SignUp } from '@/types/auth'
 import { ElCheckbox } from 'element-plus'
 import TextInput from '@/components/TextInput/index.vue'
 import Button from '@/components/Button/index.vue'
+import authApi from '@/api/authApi'
 
 defineEmits<{
   updateModal: [value: string]
 }>()
 
-const label: Ref<string> = ref(
-  'I want to receive inspiration, marketing promotions and updates via email.'
-)
-const payload: Ref<SignUp> = ref({
+const label: string = 'I want to receive inspiration, marketing promotions and updates via email.'
+
+const loading: Ref<boolean> = ref(false)
+const payload: SignUp = reactive({
   first_name: '',
   last_name: '',
   email: '',
@@ -126,6 +142,41 @@ const payload: Ref<SignUp> = ref({
   password_confirmation: '',
   is_marketing: false
 })
+
+const passwordRef = computed(() => payload.password)
+
+const rules = {
+  first_name: { required },
+  last_name: { required },
+  email: { required, email },
+  phone_number: { required },
+  address: { required },
+  password: { required },
+  password_confirmation: {
+    required,
+    sameAs: sameAs(passwordRef)
+  }
+}
+
+const v$ = useVuelidate(rules, payload)
+
+const createUser = async () => {
+  try {
+    const isFormCorrect = await v$.value.$validate()
+    if (!isFormCorrect) return
+
+    loading.value = true
+
+    const { createUser } = authApi()
+    const response = await createUser(payload)
+
+    console.log('SIGNUP RESP::', response)
+  } catch {
+    // error handler picks error from axios interceptor
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <style lang="scss" scoped>

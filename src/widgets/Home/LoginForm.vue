@@ -3,7 +3,7 @@
     <img src="@/assets/images/logo-round.svg" class="m-auto" alt="logo" />
     <h5 class="text-[#000000de] text-2xl py-6 text-center">Log in</h5>
 
-    <form class="w-[82%] m-auto">
+    <form @submit.prevent="loginUser" class="w-[82%] m-auto">
       <!-- Email Here -->
       <div class="form-group">
         <TextInput
@@ -32,7 +32,13 @@
         <el-checkbox v-model="checked" label="Remember me" size="large" />
       </div>
 
-      <Button id="login-button" classes="h-9 rounded w-full box-shadow" class="h-9">
+      <Button
+        type="submit"
+        id="login-button"
+        classes="h-9 rounded w-full box-shadow"
+        class="h-9"
+        :loading="loading"
+      >
         <span class="text-white font-medium text-[0.938rem] w-full">LOG IN</span>
       </Button>
 
@@ -47,21 +53,50 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import { type Login } from '@/types/global'
+import { reactive, ref, type Ref } from 'vue'
+import { type Login } from '@/types/auth'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
 import { ElCheckbox } from 'element-plus'
 import TextInput from '@/components/TextInput/index.vue'
 import Button from '@/components/Button/index.vue'
+import authApi from '@/api/authApi'
 
 defineEmits<{
   updateModal: [value: string]
 }>()
 
+const loading: Ref<boolean> = ref(false)
 const checked: Ref<boolean> = ref(false)
-const payload: Ref<Login> = ref({
+const payload: Login = reactive({
   email: '',
   password: ''
 })
+
+const rules = {
+  email: { required, email },
+  password: { required }
+}
+
+const v$ = useVuelidate(rules, payload)
+
+const loginUser = async () => {
+  try {
+    const isFormCorrect = await v$.value.$validate()
+    if (!isFormCorrect) return
+
+    loading.value = true
+
+    const { loginUser } = authApi()
+    const response = await loginUser(payload)
+
+    console.log('LOGIN RESP::', response)
+  } catch {
+    // error handler picks error from axios interceptor
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <style lang="scss" scoped>
