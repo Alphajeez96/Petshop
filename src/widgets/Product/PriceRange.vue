@@ -19,7 +19,7 @@
           @change="$emit('change', `&price=${value}`)"
         />
       </div>
-      <span class="flex items-center h-8 px-3.5 absolute text-sm text-[#0000008a] z-50">kn</span>
+      <span class="flex items-center h-8 px-3.5 absolute text-sm text-[#0000008a] z-20">kn</span>
     </div>
   </FilterToggle>
 </template>

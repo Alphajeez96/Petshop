@@ -12,7 +12,7 @@
 
       <!-- Sort Region Here -->
       <div class="mt-14 flex items-center">
-        <BreadcrumbVue :breadcrumbs="path" />
+        <BreadcrumbVue :breadcrumbs="breadcrumbs" />
         <div class="ml-auto">
           <PriceSort />
         </div>
@@ -35,7 +35,6 @@ import PriceSort from '@/widgets/Product/PriceSort.vue'
 import ProductDisplay from '@/widgets/Product/ProductDisplay.vue'
 import { useFetchCategoryProducts } from '@/composables/useProducts'
 import { useRoute } from 'vue-router'
-import router from '@/router'
 
 const { loading, products, fetchProductList } = useFetchCategoryProducts()
 
@@ -67,7 +66,7 @@ const handleRequest = (param: string) => {
   searchParam.value = `${searchParam.value}${param}`
 }
 
-const path: Breadcrumb[] = [
+const breadcrumbs: Breadcrumb[] = [
   { title: 'Homepage', path: '/' },
   { title: 'test 2', path: 'test2' }
 ]

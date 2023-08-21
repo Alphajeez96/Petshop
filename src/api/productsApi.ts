@@ -11,5 +11,9 @@ export default () => ({
 
   async getAllBrands() {
     return await $axios.get('/brands')
+  },
+
+  async getSingleProduct(uuid: string) {
+    return await $axios.get(`/product/${uuid}`)
   }
 })

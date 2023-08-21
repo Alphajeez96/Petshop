@@ -1,8 +1,12 @@
 <template>
   <el-breadcrumb separator="/">
-    <el-breadcrumb-item v-for="(item, i) in breadcrumbs" :key="i" :to="{ path: item?.path }">{{
-      capitalizeText(item?.title)
-    }}</el-breadcrumb-item>
+    <el-breadcrumb-item
+      v-for="(item, i) in breadcrumbs"
+      :key="i"
+      :to="{ path: item?.path }"
+      :title="item?.title"
+      >{{ capitalizeText(item?.title) }}</el-breadcrumb-item
+    >
   </el-breadcrumb>
 </template>
 

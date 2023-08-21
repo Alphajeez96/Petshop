@@ -47,3 +47,9 @@ export const debounce = (func: () => void, delay: number): (() => void) => {
     timer = setTimeout(func, delay)
   }
 }
+
+export const scrollToTop = () => {
+  window.scrollTo({
+    top: 0
+  })
+}

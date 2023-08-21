@@ -18,10 +18,14 @@
     </div>
 
     <div class="product-card__details">
-      <a :title="product?.title">{{ trimText(product?.title, 20) }}</a>
+      <a :title="product?.title" @click="$router.push(`/products/${product?.uuid}`)">{{
+        trimText(product?.title, 20)
+      }}</a>
+
       <p class="text-primary-gray pt-1" :title="productCategory">
         {{ productCategory }}
       </p>
+
       <p class="text-black text-xl font-medium pt-1">{{ product?.price }} Kn</p>
 
       <!-- Action Button Here -->
