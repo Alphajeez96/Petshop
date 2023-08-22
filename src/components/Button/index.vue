@@ -43,9 +43,7 @@ const props = withDefaults(defineProps<Button>(), {
   variant: 'primary'
 })
 
-const computedClasses = computed<string>(() => {
-  return `${props.variant} ${props.classes}`
-})
+const computedClasses = computed<string>(() => `${props.variant} ${props.classes}`)
 </script>
 
 <style lang="scss" scoped>

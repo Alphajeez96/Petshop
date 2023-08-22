@@ -51,7 +51,7 @@
       </div>
 
       <!-- Avatar Here -->
-      <div v-if="isLoggedIn" class="user-avatar" @click="$router.push('/settings')">
+      <div v-if="isLoggedIn" class="user-avatar">
         <p>{{ initials }}</p>
       </div>
     </div>
@@ -80,7 +80,7 @@ const initials = toRef(useAuthStore(), 'initials')
 const isLoggedIn = toRef(useAuthStore(), 'isAuthenticated')
 const { handleLogout, isLoggingOut } = useAuthentication()
 
-const label = computed(() => `${modalType.value} modal`)
+const label = computed<string>(() => `${modalType.value} modal`)
 
 const updateModalType = (value: string) => {
   modalType.value = value

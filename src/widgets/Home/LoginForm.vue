@@ -10,9 +10,10 @@
           id="email"
           type="email"
           variant="secondary"
-          placeholder="Email Adderss *"
+          placeholder="Email Address *"
           autocomplete="email"
           v-model="payload.email"
+          :error="v$.email.$error"
         />
       </div>
 
@@ -25,6 +26,7 @@
           placeholder="Password *"
           autocomplete="current-password"
           v-model="payload.password"
+          :error="v$.password.$error"
         />
       </div>
 
@@ -36,14 +38,13 @@
         type="submit"
         id="login-button"
         classes="h-9 rounded w-full box-shadow"
-        class="h-9"
         :loading="loading"
       >
         <span class="text-white font-medium text-[0.938rem] w-full">LOG IN</span>
       </Button>
 
       <aside class="flex my-8">
-        <a @click="$router.push('/forgot-password')"> Forgot password?</a>
+        <a @click="handleRoute"> Forgot password?</a>
         <a class="ml-auto" @click="$emit('updateModal', 'signup')"
           >Don’t have an account? Sign Up</a
         >
@@ -55,6 +56,7 @@
 <script setup lang="ts">
 import { reactive, ref, type Ref } from 'vue'
 import { type Login } from '@/types/auth'
+import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import { useAuthentication } from '@/composables/useAuth'
@@ -68,6 +70,8 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const router = useRouter()
+
 const loading: Ref<boolean> = ref(false)
 const checked: Ref<boolean> = ref(false)
 const payload: Login = reactive({
@@ -75,12 +79,12 @@ const payload: Login = reactive({
   password: ''
 })
 
-const rules = {
+const validations = {
   email: { required, email },
   password: { required }
 }
 
-const v$ = useVuelidate(rules, payload)
+const v$ = useVuelidate(validations, payload)
 
 const loginUser = async () => {
   try {
@@ -105,6 +109,11 @@ const loginUser = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const handleRoute = () => {
+  router.push('/forgot-password')
+  emit('close')
 }
 </script>
 

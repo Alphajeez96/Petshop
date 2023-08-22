@@ -56,7 +56,7 @@ const computedClasses = computed<string>(() => {
   return `${props.variant} ${props.classes} ${hasIcon} ${error}`
 })
 
-const hasValue = computed(() => props.modelValue)
+const hasValue = computed<boolean>(() => !!props.modelValue)
 
 const handleInput = (event: Event) => {
   if (event.target) {

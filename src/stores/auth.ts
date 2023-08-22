@@ -9,8 +9,8 @@ export const useAuthStore = defineStore(
     const token: Ref<string> = ref('')
     const user: Ref<User | undefined> = ref(undefined)
 
-    const isAuthenticated = computed(() => !!token.value)
-    const initials = computed(() =>
+    const isAuthenticated = computed<boolean>(() => !!token.value)
+    const initials = computed<string>(() =>
       getInitials(user.value?.first_name ?? '', user.value?.last_name ?? '')
     )
 

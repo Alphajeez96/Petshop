@@ -35,7 +35,7 @@
           id="email"
           type="email"
           variant="secondary"
-          placeholder="Email Adderss *"
+          placeholder="Email Address *"
           autocomplete="off"
           v-model="payload.email"
           :error="v$.email.$error"
@@ -103,7 +103,6 @@
         type="submit"
         id="signup-button"
         classes="h-9 rounded w-full box-shadow"
-        class="h-9"
         :loading="loading"
       >
         <span class="text-white font-medium text-[0.938rem] w-full">SIGN UP</span>
@@ -148,9 +147,9 @@ const payload: SignUp = reactive({
   is_marketing: false
 })
 
-const passwordRef = computed(() => payload.password)
+const passwordRef = computed<string>(() => payload.password)
 
-const rules = {
+const validations = {
   first_name: { required },
   last_name: { required },
   email: { required, email },
@@ -164,7 +163,7 @@ const rules = {
   }
 }
 
-const v$ = useVuelidate(rules, payload)
+const v$ = useVuelidate(validations, payload)
 
 const createUser = async () => {
   try {

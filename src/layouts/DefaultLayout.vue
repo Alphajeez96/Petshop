@@ -4,7 +4,7 @@
   </header>
 
   <main class="pt-32">
-    <div class="app-container">
+    <div class="app-container" v-if="!hideSearchBar">
       <SearchProducts />
     </div>
     <RouterView />
@@ -16,8 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import AppNav from '@/components/Partials/AppNav.vue'
 import AppFooter from '@/components/Partials/AppFooter.vue'
 import SearchProducts from '@/widgets/Global/SearchProducts.vue'
+
+const route = useRoute()
+const excluded: string[] = ['forgot-password']
+
+const hideSearchBar = computed<boolean>(() => excluded.includes(route?.name as string))
 </script>

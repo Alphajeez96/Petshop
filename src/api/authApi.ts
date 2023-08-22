@@ -14,6 +14,10 @@ export default () => ({
     return await $axios.post('/user/login', payload)
   },
 
+  async recoverPassword(email: string) {
+    return await $axios.post('/user/forgot-password', { email })
+  },
+
   async logUserOut() {
     return await $axios.get('/user/logout')
   }

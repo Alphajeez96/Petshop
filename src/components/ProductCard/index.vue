@@ -53,9 +53,9 @@ const props = defineProps<{
   product: Product
 }>()
 
-const productCategory = computed(() => {
-  return capitalizeText(trimText(props.product?.category?.title!, 30))
-})
+const productCategory = computed<string>(() =>
+  capitalizeText(trimText(props.product?.category?.title!, 30))
+)
 
 const isHovered: Ref<boolean> = ref(false)
 </script>
