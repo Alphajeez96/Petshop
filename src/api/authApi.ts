@@ -1,5 +1,5 @@
 import $axios from '@/axiosConfig'
-import { type SignUp, type Login } from '@/types/auth'
+import { type SignUp, type Login, type ResetPassword } from '@/types/auth'
 
 export default () => ({
   async fetchUser() {
@@ -16,6 +16,10 @@ export default () => ({
 
   async recoverPassword(email: string) {
     return await $axios.post('/user/forgot-password', { email })
+  },
+
+  async resetPassword(payload: ResetPassword) {
+    return await $axios.post('/user/reset-password-token', payload)
   },
 
   async logUserOut() {

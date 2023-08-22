@@ -32,26 +32,27 @@
           v-model="userEmail"
           :error="v$.userEmail.$error"
         />
-
-        <Button
-          type="submit"
-          id="login-button"
-          classes="h-9 rounded w-full box-shadow mt-10"
-          :loading="loading"
-        >
-          <span class="text-white font-medium text-[0.938rem] w-full uppercase"
-            >get recovery link</span
-          >
-        </Button>
       </div>
+
+      <Button
+        type="submit"
+        id="login-button"
+        classes="h-9 rounded w-full box-shadow mt-5"
+        :loading="loading"
+      >
+        <span class="text-white font-medium text-[0.938rem] w-full uppercase"
+          >get recovery link</span
+        >
+      </Button>
     </form>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import { scrollToTop } from '@/utils/global'
 import authApi from '@/api/authApi'
 import Modal from '@/components/Modal/index.vue'
 import Button from '@/components/Button/index.vue'
@@ -69,6 +70,10 @@ const validations = {
 }
 
 const v$ = useVuelidate(validations, { userEmail })
+
+onMounted(() => {
+  scrollToTop()
+})
 
 const recoverPassword = async () => {
   try {

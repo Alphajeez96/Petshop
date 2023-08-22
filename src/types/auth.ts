@@ -15,3 +15,8 @@ export interface SignUp extends Login {
 export interface User extends SignUp {
   uuid: string
 }
+
+export interface ResetPassword extends Login {
+  token: string
+  password_confirmation: string
+}

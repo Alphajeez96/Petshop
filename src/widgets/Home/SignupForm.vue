@@ -164,7 +164,6 @@ const validations = {
 }
 
 const v$ = useVuelidate(validations, payload)
-
 const createUser = async () => {
   try {
     const isFormCorrect = await v$.value.$validate()
