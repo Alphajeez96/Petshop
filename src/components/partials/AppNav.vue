@@ -8,8 +8,8 @@
       parentElementIdentifier="nav"
       @close="closeModal"
     >
-      <LoginForm v-if="modalType === 'login'" @updateModal="updateModalType" />
-      <SignupForm v-else @updateModal="updateModalType" />
+      <LoginForm v-if="modalType === 'login'" @updateModal="updateModalType" @close="closeModal" />
+      <SignupForm v-else @updateModal="updateModalType" @close="closeModal" />
     </Modal>
   </aside>
 
@@ -39,8 +39,14 @@
       </Button>
 
       <div class="ml-5">
-        <Button id="login-btn" variant="secondary" :classes="buttonClasses" @click="isModal = true">
-          Login
+        <Button
+          id="login-btn"
+          variant="secondary"
+          :classes="buttonClasses"
+          @click="handleClick"
+          :loading="isLoggingOut"
+        >
+          {{ isLoggedIn ? 'logout' : 'login' }}
         </Button>
       </div>
     </div>
@@ -48,7 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, type Ref } from 'vue'
+import { ref, computed, type Ref, toRef } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useAuthentication } from '@/composables/useAuth'
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import IconDropdown from '@/components/Icons/IconDropdown.vue'
@@ -56,15 +64,16 @@ import Modal from '@/components/Modal/index.vue'
 import LoginForm from '@/widgets/Home/LoginForm.vue'
 import SignupForm from '@/widgets/Home/SignupForm.vue'
 
-const isModal: Ref<boolean> = ref(false)
-const isOpen: Ref<boolean> = ref(false)
-const modalType: Ref<string> = ref('login')
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
-const label = computed(() => {
-  return `${modalType.value} modal`
-})
+const isModal: Ref<boolean> = ref(false)
+const isOpen: Ref<boolean> = ref(false)
+const modalType: Ref<string> = ref('login')
+
+const label = computed(() => `${modalType.value} modal`)
+const isLoggedIn = toRef(useAuthStore(), 'isAuthenticated')
+const { handleLogout, isLoggingOut } = useAuthentication()
 
 const updateModalType = (value: string) => {
   modalType.value = value
@@ -73,6 +82,14 @@ const updateModalType = (value: string) => {
 const closeModal = () => {
   isModal.value = false
   modalType.value = 'login'
+}
+
+const handleClick = () => {
+  if (isLoggedIn.value) {
+    handleLogout()
+  } else {
+    isModal.value = true
+  }
 }
 
 const handleRoute = (route: string) => {

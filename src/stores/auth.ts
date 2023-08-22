@@ -14,8 +14,8 @@ export const useAuthStore = defineStore(
       token.value = value
     }
 
-    const setUser = (userData: User) => {
-      user.value = userData
+    const setUser = (payload: User) => {
+      user.value = payload
     }
 
     const logout = () => {
@@ -32,6 +32,7 @@ export const useAuthStore = defineStore(
       isAuthenticated
     }
   },
+
   {
     persist: {
       key: 'pet-store__auth'

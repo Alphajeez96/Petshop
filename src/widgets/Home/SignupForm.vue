@@ -77,6 +77,9 @@
           v-model="payload.password"
           :error="v$.password.$error"
         />
+        <span v-if="v$.password.$error" class="text-xs text-red-400"
+          >Password must be atleast 8 characters long</span
+        >
       </div>
 
       <!-- Confirm Password Here -->
@@ -107,7 +110,7 @@
       </Button>
 
       <aside class="text-center my-8">
-        <a class="ml-auto" @click="$emit('updateModal', 'login')"
+        <a class="ml-auto" @click="emit('updateModal', 'login')"
           >Already have an account? Sign in</a
         >
       </aside>
@@ -118,15 +121,17 @@
 <script setup lang="ts">
 import { reactive, computed, ref, type Ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, sameAs } from '@vuelidate/validators'
-import { type SignUp } from '@/types/auth'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { useAuthentication } from '@/composables/useAuth'
+import { type SignUp, type User } from '@/types/auth'
 import { ElCheckbox } from 'element-plus'
 import TextInput from '@/components/TextInput/index.vue'
 import Button from '@/components/Button/index.vue'
 import authApi from '@/api/authApi'
 
-defineEmits<{
+const emit = defineEmits<{
   updateModal: [value: string]
+  close: []
 }>()
 
 const label: string = 'I want to receive inspiration, marketing promotions and updates via email.'
@@ -151,9 +156,10 @@ const rules = {
   email: { required, email },
   phone_number: { required },
   address: { required },
-  password: { required },
+  password: { required, minLength: minLength(8) },
   password_confirmation: {
     required,
+    minLength: minLength(8),
     sameAs: sameAs(passwordRef)
   }
 }
@@ -169,8 +175,17 @@ const createUser = async () => {
 
     const { createUser } = authApi()
     const response = await createUser(payload)
+    const { setSessionToken, setUserData } = useAuthentication()
 
-    console.log('SIGNUP RESP::', response)
+    if (response.data) {
+      const { data } = response || {}
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const dataWithoutToken: User = (({ token, ...rest }) => rest)(data)
+
+      setSessionToken(data.token)
+      setUserData(dataWithoutToken)
+      emit('close')
+    }
   } catch {
     // error handler picks error from axios interceptor
   } finally {

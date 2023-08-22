@@ -57,13 +57,15 @@ import { reactive, ref, type Ref } from 'vue'
 import { type Login } from '@/types/auth'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import { useAuthentication } from '@/composables/useAuth'
 import { ElCheckbox } from 'element-plus'
 import TextInput from '@/components/TextInput/index.vue'
 import Button from '@/components/Button/index.vue'
 import authApi from '@/api/authApi'
 
-defineEmits<{
+const emit = defineEmits<{
   updateModal: [value: string]
+  close: []
 }>()
 
 const loading: Ref<boolean> = ref(false)
@@ -87,10 +89,17 @@ const loginUser = async () => {
 
     loading.value = true
 
-    const { loginUser } = authApi()
-    const response = await loginUser(payload)
+    const { loginUser, fetchUser } = authApi()
+    const loginResponse = await loginUser(payload)
+    const { setSessionToken, setUserData } = useAuthentication()
 
-    console.log('LOGIN RESP::', response)
+    if (loginResponse.data) {
+      setSessionToken(loginResponse.data?.token)
+
+      const userResponse = await fetchUser()
+      setUserData(userResponse.data)
+      emit('close')
+    }
   } catch {
     // error handler picks error from axios interceptor
   } finally {

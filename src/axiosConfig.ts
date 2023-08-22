@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance } from 'axios'
+import type { AxiosInstance, AxiosResponse } from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 import errorHandler from './plugins/errorHandler'
@@ -35,7 +35,7 @@ const createAxiosInstance = (): AxiosInstance => {
   )
 
   instance.interceptors.response.use(
-    (response) => {
+    (response: AxiosResponse) => {
       return response.data
     },
     (error) => {
