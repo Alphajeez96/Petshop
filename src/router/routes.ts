@@ -21,7 +21,7 @@ const routes = [
     component: ProductView
   }
 
-  //TODO: names =>  shop, products
+  //TODO: names =>  shop, products, settings
 ]
 
 export default routes

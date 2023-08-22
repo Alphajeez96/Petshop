@@ -49,6 +49,11 @@
           {{ isLoggedIn ? 'logout' : 'login' }}
         </Button>
       </div>
+
+      <!-- Avatar Here -->
+      <div v-if="isLoggedIn" class="user-avatar" @click="$router.push('/settings')">
+        <p>{{ initials }}</p>
+      </div>
     </div>
   </nav>
 </template>
@@ -71,9 +76,11 @@ const isModal: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(false)
 const modalType: Ref<string> = ref('login')
 
-const label = computed(() => `${modalType.value} modal`)
+const initials = toRef(useAuthStore(), 'initials')
 const isLoggedIn = toRef(useAuthStore(), 'isAuthenticated')
 const { handleLogout, isLoggingOut } = useAuthentication()
+
+const label = computed(() => `${modalType.value} modal`)
 
 const updateModalType = (value: string) => {
   modalType.value = value
@@ -113,6 +120,14 @@ nav {
       &:last-child {
         @apply w-0;
       }
+    }
+  }
+
+  .user-avatar {
+    @apply ml-5 h-12 w-12 border border-white rounded-full cursor-pointer flex items-center justify-center;
+
+    p {
+      @apply text-white font-medium;
     }
   }
 }
