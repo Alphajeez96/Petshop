@@ -93,6 +93,7 @@ const changePassword = async () => {
     const response = await resetPassword({ ...payload, token, email })
 
     if (response.data) {
+      localStorage.removeItem('recoveryEmail')
       toast.success(response.data?.message)
       router.push('/')
     }

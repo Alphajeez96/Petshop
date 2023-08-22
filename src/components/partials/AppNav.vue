@@ -11,6 +11,9 @@
       <LoginForm v-if="modalType === 'login'" @updateModal="updateModalType" @close="closeModal" />
       <SignupForm v-else @updateModal="updateModalType" @close="closeModal" />
     </Modal>
+
+    <!-- User Modal Here -->
+    <UserModal :isOpen="isUserModal" @close="isUserModal = false" />
   </aside>
 
   <nav>
@@ -51,7 +54,7 @@
       </div>
 
       <!-- Avatar Here -->
-      <div v-if="isLoggedIn" class="user-avatar">
+      <div v-if="isLoggedIn" class="user-avatar" @click="isUserModal = true">
         <p>{{ initials }}</p>
       </div>
     </div>
@@ -68,10 +71,12 @@ import IconDropdown from '@/components/Icons/IconDropdown.vue'
 import Modal from '@/components/Modal/index.vue'
 import LoginForm from '@/widgets/Home/LoginForm.vue'
 import SignupForm from '@/widgets/Home/SignupForm.vue'
+import UserModal from '@/widgets/User/UserModal.vue'
 
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
+const isUserModal: Ref<boolean> = ref(false)
 const isModal: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(false)
 const modalType: Ref<string> = ref('login')
@@ -124,7 +129,7 @@ nav {
   }
 
   .user-avatar {
-    @apply ml-5 h-12 w-12 border border-white rounded-full cursor-pointer flex items-center justify-center;
+    @apply ml-5 h-12 w-12 border border-white rounded-full cursor-pointer flex items-center justify-center cursor-pointer;
 
     p {
       @apply text-white font-medium;

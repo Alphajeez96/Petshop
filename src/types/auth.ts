@@ -14,6 +14,7 @@ export interface SignUp extends Login {
 
 export interface User extends SignUp {
   uuid: string
+  created_at?: string
 }
 
 export interface ResetPassword extends Login {

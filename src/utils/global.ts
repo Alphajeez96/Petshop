@@ -1,4 +1,6 @@
+import moment from 'moment'
 import { type Blob } from '@/types/global'
+
 export const retrieveFile = (file: string) => {
   if (file) return `http://pet-shop.buckhill.com.hr/api/v1/file/${file}`
 }
@@ -60,4 +62,9 @@ export const getInitials = (firstName: string, lastName: string): string => {
   const firstInitial = firstName.charAt(0).toUpperCase()
   const lastInitial = lastName.charAt(0).toUpperCase()
   return `${firstInitial}${lastInitial}`
+}
+
+export const formatDate = (value: string): string => {
+  if (!value) return ''
+  return moment(value).format('D. M. YYYY')
 }
