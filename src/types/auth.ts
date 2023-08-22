@@ -11,3 +11,7 @@ export interface SignUp extends Login {
   password_confirmation: string
   is_marketing?: boolean
 }
+
+export interface User extends SignUp {
+  uuid: string
+}
