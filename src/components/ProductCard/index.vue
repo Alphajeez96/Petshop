@@ -30,7 +30,12 @@
 
       <!-- Action Button Here -->
       <div class="mt-3" v-if="hasButton">
-        <Button id="cart-btn" class="rounded" classes="h-[30px] px-4 rounded">
+        <Button
+          id="cart-btn"
+          class="rounded"
+          classes="h-[30px] px-4 rounded"
+          @click="addProductToCart"
+        >
           <IconCart height="16" width="16" />
           <span class="ml-2 uppercase text-[13px] font-medium">add to cart</span>
         </Button>
@@ -42,22 +47,27 @@
 <script setup lang="ts">
 import { ref, computed, type Ref } from 'vue'
 import { type Product } from '@/types/products'
-import { trimText, capitalizeText, retrieveFile } from '@/utils/global'
+import { useCartStore } from '@/stores/cart'
+import { trimText, capitalizeText, retrieveFile, debounce } from '@/utils/global'
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
 
+const { addToCart } = useCartStore()
 const props = defineProps<{
   hasButton?: boolean
   loading: boolean
   product: Product
 }>()
 
+const isHovered: Ref<boolean> = ref(false)
 const productCategory = computed<string>(() =>
   capitalizeText(trimText(props.product?.category?.title!, 30))
 )
 
-const isHovered: Ref<boolean> = ref(false)
+const addProductToCart = debounce(() => {
+  addToCart(props.product)
+}, 100)
 </script>
 
 <style lang="scss" scoped>

@@ -43,7 +43,7 @@
         @click="$router.push('/cart')"
       >
         <IconCart />
-        <span class="ml-2">cart (0)</span>
+        <span class="ml-2"> {{ `cart (${cart.length})` }} </span>
       </Button>
 
       <div class="ml-5">
@@ -69,6 +69,7 @@
 <script setup lang="ts">
 import { ref, computed, type Ref, toRef } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useCartStore } from '@/stores/cart'
 import { useAuthentication } from '@/composables/useAuth'
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
@@ -78,6 +79,7 @@ import LoginForm from '@/widgets/Home/LoginForm.vue'
 import SignupForm from '@/widgets/Home/SignupForm.vue'
 import UserModal from '@/widgets/User/UserModal.vue'
 
+const { cart } = useCartStore()
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
