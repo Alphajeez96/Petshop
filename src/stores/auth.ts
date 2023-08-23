@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 import { type User } from '@/types/auth'
 import { getInitials } from '@/utils/global'
+import { useCartStore } from '@/stores/cart'
+import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore(
   'authStore',
@@ -14,6 +16,9 @@ export const useAuthStore = defineStore(
       getInitials(user.value?.first_name ?? '', user.value?.last_name ?? '')
     )
 
+    const router = useRouter()
+    const { clearCart } = useCartStore()
+
     const setToken = (value: string) => {
       token.value = value
     }
@@ -25,6 +30,8 @@ export const useAuthStore = defineStore(
     const logout = () => {
       token.value = ''
       user.value = undefined
+      clearCart()
+      router.push('/')
     }
 
     return {

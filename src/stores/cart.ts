@@ -39,12 +39,17 @@ export const useCartStore = defineStore(
       }
     }
 
+    const clearCart = () => {
+      cart.value = []
+    }
+
     return {
       cart,
       addToCart,
       removeFromCart,
       updateQuantity,
-      findProductInCart
+      findProductInCart,
+      clearCart
     }
   },
 

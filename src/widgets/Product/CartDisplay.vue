@@ -61,8 +61,7 @@ import { trimText, retrieveFile } from '@/utils/global'
 import Button from '@/components/Button/index.vue'
 import Remove from '@/components/Button/Remove.vue'
 
-const buttonClasses = 'px-5 h-12 rounded box-shadow mt-16'
-
+const buttonClasses: string = 'px-5 h-12 rounded box-shadow mt-16'
 const { cart, removeFromCart } = useCartStore()
 </script>
 

@@ -7,6 +7,7 @@
     :class="{ 'hover-animation': isHovered, 'has-button': hasButton }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false"
+    @click="handleClick($event)"
   >
     <div class="product-card__image">
       <img
@@ -18,9 +19,7 @@
     </div>
 
     <div class="product-card__details">
-      <a :title="product?.title" @click="$router.push(`/products/${product?.uuid}`)">{{
-        trimText(product?.title, 20)
-      }}</a>
+      <a :title="product?.title">{{ trimText(product?.title, 20) }}</a>
 
       <p class="text-primary-gray pt-1" :title="productCategory">
         {{ productCategory }}
@@ -30,12 +29,7 @@
 
       <!-- Action Button Here -->
       <div class="mt-3" v-if="hasButton">
-        <Button
-          id="cart-btn"
-          class="rounded"
-          classes="h-[30px] px-4 rounded"
-          @click="addProductToCart"
-        >
+        <Button id="cart-btn" class="rounded" classes="h-[30px] px-4 rounded">
           <IconCart height="16" width="16" />
           <span class="ml-2 uppercase text-[13px] font-medium">add to cart</span>
         </Button>
@@ -52,6 +46,7 @@ import { trimText, capitalizeText, retrieveFile, debounce } from '@/utils/global
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
+import { useRouter } from 'vue-router'
 
 const { addToCart } = useCartStore()
 const props = defineProps<{
@@ -59,7 +54,7 @@ const props = defineProps<{
   loading: boolean
   product: Product
 }>()
-
+const router = useRouter()
 const isHovered: Ref<boolean> = ref(false)
 const productCategory = computed<string>(() =>
   capitalizeText(trimText(props.product?.category?.title!, 30))
@@ -68,6 +63,16 @@ const productCategory = computed<string>(() =>
 const addProductToCart = debounce(() => {
   addToCart(props.product)
 }, 100)
+
+const handleClick = (event: Event) => {
+  const { innerHTML } = event.target as HTMLElement
+
+  if (innerHTML === 'add to cart') {
+    addProductToCart()
+  } else {
+    router.push(`/products/${props.product?.uuid}`)
+  }
+}
 </script>
 
 <style lang="scss" scoped>
