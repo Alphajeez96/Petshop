@@ -4,6 +4,7 @@ export interface Product extends Blob {
   category: Categories
   price: string
   description: string
+  quantity?: number
 }
 
 export interface Categories {

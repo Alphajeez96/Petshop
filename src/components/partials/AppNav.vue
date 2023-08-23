@@ -36,7 +36,12 @@
 
     <!-- Action Buttons Here -->
     <div class="flex">
-      <Button id="cart-btn" variant="secondary" :classes="buttonClasses">
+      <Button
+        id="cart-btn"
+        variant="secondary"
+        :classes="buttonClasses"
+        @click="$router.push('/cart')"
+      >
         <IconCart />
         <span class="ml-2">cart (0)</span>
       </Button>

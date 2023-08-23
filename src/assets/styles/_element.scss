@@ -63,6 +63,16 @@
     }
   }
 
+  &.cart-display {
+    .el-input__wrapper {
+      height: 36px !important;
+    }
+
+    .el-input__inner {
+      height: 36px !important;
+    }
+  }
+
   .el-input-number {
     .el-input-number__decrease {
       left: -6px !important;

@@ -3,6 +3,8 @@ import CategoryView from '../views/CategoryView.vue'
 import ProductView from '../views/ProductView.vue'
 import ForgotPasswordView from '../views/ForgotPasswordView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
+import CartView from '../views/CartView.vue'
+import checkoutView from '../views/checkoutView.vue'
 
 const routes = [
   {
@@ -12,27 +14,39 @@ const routes = [
   },
 
   {
-    path: '/shop/:uuid', // Use a parameter to capture the category UUID
+    path: '/shop/:uuid',
     name: 'category',
     component: CategoryView
   },
 
   {
-    path: '/products/:uuid', // Use a parameter to capture the category UUID
+    path: '/products/:uuid',
     name: 'products',
     component: ProductView
   },
 
   {
-    path: '/forgot-password', // Use a parameter to capture the category UUID
+    path: '/forgot-password',
     name: 'forgot-password',
     component: ForgotPasswordView
   },
 
   {
-    path: '/reset-password', // Use a parameter to capture the category UUID
+    path: '/reset-password',
     name: 'reset-password',
     component: ResetPasswordView
+  },
+
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView
+  },
+
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: checkoutView
   }
 
   //TODO: names =>  shop, products,forgot-password, rese

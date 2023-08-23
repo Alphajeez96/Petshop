@@ -1,5 +1,5 @@
-import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
+import { computed, ref, type Ref } from 'vue'
 import { type User } from '@/types/auth'
 import { getInitials } from '@/utils/global'
 
