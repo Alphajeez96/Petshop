@@ -175,3 +175,17 @@
   height: 42px !important;
   line-height: 42px !important;
 }
+
+/* Table STYLES HERE */
+
+.el-table .el-table__cell {
+  padding: 14px 0 !important;
+}
+
+.el-table .cell {
+  @apply font-medium text-[#0000008a];
+}
+
+.el-table__row .cell {
+  font-weight: 400 !important;
+}

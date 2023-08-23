@@ -10,3 +10,8 @@ export interface Breadcrumb {
   title: string
   path: string
 }
+
+export interface Column {
+  prop: string
+  label: string
+}

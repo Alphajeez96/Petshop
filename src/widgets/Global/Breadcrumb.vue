@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import { type Breadcrumb } from '@/types/global'
-import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
 import { capitalizeText } from '@/utils/global'
 
 defineProps<{
