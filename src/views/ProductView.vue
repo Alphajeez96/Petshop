@@ -9,7 +9,7 @@
         <SkeletonLoader v-if="loading" custom-classes="h-[650px] w-full" />
         <img
           v-else
-          :src="retrieveFile(product?.metadata?.image as string)"
+          :src="retrieveFile(product?.metadata?.image!)"
           :alt="product?.title"
           class="object-contain h-[inherit]"
         />
@@ -21,7 +21,7 @@
         <article v-else>
           <h3 class="text-[#000000de] text-5xl leading-snug">{{ product?.title }}</h3>
           <h4 class="text-primary-gray text-[2.125rem] pt-3">
-            {{ capitalizeText(product?.category?.title as string) }}
+            {{ capitalizeText(product?.category?.title!) }}
           </h4>
         </article>
 
@@ -30,14 +30,26 @@
         <div v-else class="mt-12">
           <h2 class="text-[#000000de] text-6xl">{{ product?.price }} Kn</h2>
           <div class="flex mt-7">
-            <Button id="product-cart" classes="px-5 h-12 rounded box-shadow">
+            <Remove v-if="isInCart" height="3rem" @click="handleProductRemoval(product!)" />
+
+            <Button
+              v-else
+              v
+              id="product-cart"
+              classes="px-5 h-12 rounded box-shadow"
+              @click="addProductToCart"
+            >
               <IconCart />
               <span class="ml-2 uppercase text-[0.938rem] font-medium">add to cart</span>
             </Button>
 
             <!-- Quantity control Here -->
             <div class="ml-7" id="quantity-input">
-              <el-input-number :min="1" v-model="quantity" />
+              <el-input-number
+                :min="1"
+                v-model="quantity"
+                @change="(value) => updateQuantity(product!, value!)"
+              />
             </div>
           </div>
         </div>
@@ -54,29 +66,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, type Ref } from 'vue'
+import { ref, onMounted, watch, computed, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCartStore } from '@/stores/cart'
 import { type Breadcrumb } from '@/types/global'
 import { type Product } from '@/types/products'
-import { retrieveFile, capitalizeText, trimText, scrollToTop } from '@/utils/global'
+import { retrieveFile, capitalizeText, trimText, scrollToTop, debounce } from '@/utils/global'
 import { ElInputNumber } from 'element-plus'
 import BreadcrumbVue from '@/widgets/Global/Breadcrumb.vue'
 import Button from '@/components/Button/index.vue'
+import Remove from '@/components/Button/Remove.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
 import productsApi from '@/api/productsApi'
 
 const route = useRoute()
+const { addToCart, cart, removeFromCart, findProductInCart, updateQuantity } = useCartStore()
 
 const loading: Ref<boolean> = ref(false)
-const quantity: Ref<number> = ref(0)
+const isInCart: Ref<boolean> = ref(false)
+const quantity: Ref<number> = ref(1)
 const product: Ref<Product | undefined> = ref(undefined)
 const breadCrumbs: Ref<Breadcrumb[]> = ref([])
-
-onMounted(() => {
-  getProductDetails()
-  scrollToTop()
-})
 
 watch(
   () => route.params.uuid,
@@ -85,16 +96,46 @@ watch(
   }
 )
 
+watch(cart, () => {
+  isInCart.value = !!findProductInCart(currentProduct.value.uuid!)
+})
+
+const currentProduct = computed<Product>(() => product.value!)
+
+onMounted(() => {
+  getProductDetails()
+  scrollToTop()
+})
+
+const addProductToCart = debounce(() => {
+  addToCart(currentProduct.value, quantity.value)
+}, 100)
+
+const handleProductRemoval = (product: Product) => {
+  removeFromCart(product)
+  quantity.value = 1
+}
+
+const productDataSync = () => {
+  const existingProduct = findProductInCart(product.value?.uuid!)
+
+  if (existingProduct) {
+    isInCart.value = !!existingProduct
+    quantity.value = existingProduct.quantity!
+  }
+}
+
 const getProductDetails = async () => {
   try {
     loading.value = true
     breadCrumbs.value = []
 
     const { getSingleProduct } = productsApi()
-    const response = await getSingleProduct(route.params.uuid as string)
+    const response = await getSingleProduct(route.params?.uuid as string)
     const { data } = response
 
     product.value = data
+    productDataSync()
     breadCrumbs.value.push(
       { title: 'Homepage', path: '/' },
       { title: data.category?.title, path: `/shop/${data.category?.uuid}` },

@@ -7,13 +7,15 @@ export const useCartStore = defineStore(
   () => {
     const cart: Ref<Product[]> = ref([])
 
-    const addToCart = (product: Product) => {
+    const findProductInCart = (uuid: string) => cart.value.find((item) => item.uuid === uuid)
+
+    const addToCart = (product: Product, quantity: number = 1) => {
       const existingProduct = findProductInCart(product.uuid)
 
       if (existingProduct) {
         existingProduct.quantity! += 1
       } else {
-        cart.value.push({ ...product, quantity: 1 })
+        cart.value.push({ ...product, quantity })
       }
     }
 
@@ -28,7 +30,7 @@ export const useCartStore = defineStore(
       const existingProduct = findProductInCart(product.uuid)
 
       if (existingProduct) {
-        existingProduct.quantity! += quantity
+        existingProduct.quantity = quantity
 
         // To Ensure the quantity doesn't go below 1
         if (existingProduct.quantity! < 1) {
@@ -36,8 +38,6 @@ export const useCartStore = defineStore(
         }
       }
     }
-
-    const findProductInCart = (uuid: string) => cart.value.find((item) => item.uuid === uuid)
 
     return {
       cart,
