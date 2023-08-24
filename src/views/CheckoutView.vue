@@ -1,5 +1,5 @@
 <template>
-  <section class="w-1/2 pt-8 pb-32 m-auto">
+  <section class="w-[45%] pt-8 pb-32 m-auto">
     <h1 class="text-primary-green font-light text-6xl pt-7">Checkout</h1>
 
     <div class="step-indicator">

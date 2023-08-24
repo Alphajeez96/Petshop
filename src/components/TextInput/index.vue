@@ -30,7 +30,7 @@ interface TextInput {
   type: 'text' | 'email' | 'password' | 'number'
   modelValue: string
   classes?: string
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'tertiary'
   disabled?: boolean
   readonly?: boolean
   hasIcon?: boolean
@@ -96,6 +96,14 @@ const handleInput = (event: Event) => {
       }
     }
 
+    &.tertiary {
+      @apply border-b  border-b-[#c4c4c4] border-transparent rounded-none px-0;
+
+      & + label {
+        @apply text-primary-gray left-0;
+      }
+    }
+
     &.invalid {
       @apply translate-y-0 border border-red-500;
     }
@@ -108,6 +116,12 @@ const handleInput = (event: Event) => {
       }
 
       &.secondary {
+        & + label {
+          @apply text-black;
+        }
+      }
+
+      &.tertiary {
         & + label {
           @apply text-black;
         }
