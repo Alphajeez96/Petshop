@@ -19,9 +19,9 @@
     <!-- Forms Here -->
     <transition name="slide-fade" mode="out-in">
       <div :key="activeMethod" class="mt-20">
-        <CardDetails v-if="activeMethod === 'card'" />
-        <CashDelivery v-if="activeMethod === 'cash'" />
-        <BankTransfer v-if="activeMethod === 'bank'" />
+        <CardDetails v-if="activeMethod === 'credit_card'" />
+        <CashDelivery v-if="activeMethod === 'cash_on_delivery'" />
+        <BankTransfer v-if="activeMethod === 'bank_transfer'" />
       </div>
     </transition>
   </section>
@@ -40,12 +40,12 @@ interface Method {
 }
 
 const methods: Method[] = [
-  { title: 'Credit Card', tag: 'card' },
-  { title: 'Cash on delivery', tag: 'cash' },
-  { title: 'Bank transfer', tag: 'bank' }
+  { title: 'Credit Card', tag: 'credit_card' },
+  { title: 'Cash on delivery', tag: 'cash_on_delivery' },
+  { title: 'Bank transfer', tag: 'bank_transfer' }
 ]
 
-const activeMethod: Ref<string> = ref('cash')
+const activeMethod: Ref<string> = ref('cash_on_delivery')
 </script>
 
 <style lang="scss" scoped>

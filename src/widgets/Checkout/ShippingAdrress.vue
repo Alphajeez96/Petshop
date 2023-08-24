@@ -5,40 +5,96 @@
     <div class="mt-10">
       <!-- Name Here -->
       <div class="form-group flex gap-8">
-        <TextInput id="first-name" placeholder="First name *" type="text" variant="tertiary" />
-        <TextInput id="last-name" placeholder="Last name *" type="text" variant="tertiary" />
+        <TextInput
+          id="first-name"
+          placeholder="First name *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.firstName"
+        />
+        <TextInput
+          id="last-name"
+          placeholder="Last name *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.lastName"
+        />
       </div>
 
       <!-- Addrss Line 1 -->
       <div class="form-group flex gap-8">
-        <TextInput id="address-1" placeholder="Address line 1 *" type="text" variant="tertiary" />
+        <TextInput
+          id="address-1"
+          placeholder="Address line 1 *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.addressLine1"
+        />
       </div>
 
       <!-- Addrss Line 2 -->
       <div class="form-group flex gap-8">
-        <TextInput id="address-2" placeholder="Address line 1 *" type="text" variant="tertiary" />
+        <TextInput
+          id="address-2"
+          placeholder="Address line 2 *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.addressLine2"
+        />
       </div>
 
       <!-- City - state  -->
       <div class="form-group flex gap-8">
-        <TextInput id="first-name" placeholder="City *" type="text" variant="tertiary" />
         <TextInput
-          id="last-name"
+          id="shipping-city"
+          placeholder="City *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.city"
+        />
+        <TextInput
+          id="shipping-state"
           placeholder="State/Province/Region *"
           type="text"
           variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.state"
         />
       </div>
 
       <!-- Zip code - Country  -->
       <div class="form-group flex gap-8">
-        <TextInput id="first-name" placeholder="Zip/Postal code *" type="text" variant="tertiary" />
-        <TextInput id="last-name" placeholder="Country *" type="text" variant="tertiary" />
+        <TextInput
+          id="shipping-zip"
+          placeholder="Zip/Postal code *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.zip"
+        />
+        <TextInput
+          id="shipping-country"
+          placeholder="Country *"
+          type="text"
+          variant="tertiary"
+          :disabled="isPaymentSame"
+          v-model="shippingAddress.country"
+        />
       </div>
 
       <!-- Check box here -->
       <div class="form-group px-3">
-        <el-checkbox label="Use this address for payment details" size="large" />
+        <el-checkbox
+          label="Use this address for payment details"
+          size="large"
+          :disabled="isPaymentSame"
+          v-model="isShippingSame"
+        />
       </div>
 
       <!-- Button Here -->
@@ -56,7 +112,18 @@
 </template>
 
 <script setup lang="ts">
+import { toRef, onMounted } from 'vue'
 import TextInput from '@/components/TextInput/index.vue'
+import { useCheckoutStore } from '@/stores/checkout'
+
+const { shippingAddress, billingAddress, updateAddress } = useCheckoutStore()
+
+const isShippingSame = toRef(useCheckoutStore(), 'isShippingSame')
+const isPaymentSame = toRef(useCheckoutStore(), 'isPaymentSame')
+
+onMounted(() => {
+  if (isPaymentSame.value) updateAddress(shippingAddress, billingAddress)
+})
 
 defineEmits<{
   handleStep: [value: number]

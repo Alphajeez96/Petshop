@@ -1,5 +1,5 @@
 <template>
-  <span v-if="tag === 'card'">
+  <span v-if="tag === 'credit_card'">
     <svg
       width="113"
       height="112"
@@ -14,7 +14,7 @@
     </svg>
   </span>
 
-  <span v-if="tag === 'cash'">
+  <span v-if="tag === 'cash_on_delivery'">
     <svg
       width="113"
       height="112"
@@ -29,7 +29,7 @@
     </svg>
   </span>
 
-  <span v-if="tag === 'bank'">
+  <span v-if="tag === 'bank_transfer'">
     <svg
       width="119"
       height="119"
