@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { type Product } from '@/types/products'
 
 export const useCartStore = defineStore(
   'cartStore',
   () => {
     const cart: Ref<Product[]> = ref([])
+
+    const cartSize = computed<number>(() => cart.value.length || 0)
 
     const findProductInCart = (uuid: string) => cart.value.find((item) => item.uuid === uuid)
 
@@ -49,6 +51,7 @@ export const useCartStore = defineStore(
       removeFromCart,
       updateQuantity,
       findProductInCart,
+      cartSize,
       clearCart
     }
   },

@@ -14,7 +14,7 @@
     </div>
 
     <!-- Forms Here -->
-    <transition name="slide-fade">
+    <transition name="slide-fade" mode="out-in">
       <div :key="currentStep" class="mt-20">
         <component :is="currentStepComponent" @handleStep="(value: number) => goToStep(value)" />
       </div>
@@ -50,15 +50,19 @@ const currentStepComponent = computed(() => {
 })
 
 onMounted(() => {
-  const stepParam = route.query.step
-  if (stepParam) {
-    currentStep.value = parseInt(stepParam as string)
-  }
+  updateStep()
 })
 
 const goToStep = (stepIndex: number) => {
   currentStep.value = stepIndex
   router.push({ query: { step: stepIndex } })
+}
+
+const updateStep = () => {
+  const stepParam = route.query.step
+  if (stepParam) {
+    currentStep.value = parseInt(stepParam as string)
+  }
 }
 </script>
 
@@ -90,36 +94,4 @@ const goToStep = (stepIndex: number) => {
     }
   }
 }
-
-/* .step-circle.active {
-  background-color: #4ec690;
-} */
-
-/* .slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition:
-    opacity 0.5s ease-in-out,
-    transform 0.5s ease-in-out;
-}
-
-.slide-fade-enter,
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateX(10px); 
-} */
-
-/* SECOND ANIME */
-
-/* .slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition:
-    opacity 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
-}
-
-.slide-fade-enter,
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateY(10px); 
-} */
 </style>

@@ -43,7 +43,7 @@
         @click="$router.push('/cart')"
       >
         <IconCart />
-        <span class="ml-2"> {{ `cart (${cart.length})` }} </span>
+        <span class="ml-2"> {{ `cart (${cartSize})` }} </span>
       </Button>
 
       <div class="ml-5">
@@ -79,7 +79,6 @@ import LoginForm from '@/widgets/Home/LoginForm.vue'
 import SignupForm from '@/widgets/Home/SignupForm.vue'
 import UserModal from '@/widgets/User/UserModal.vue'
 
-const { cart } = useCartStore()
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
@@ -90,6 +89,8 @@ const modalType: Ref<string> = ref('login')
 
 const initials = toRef(useAuthStore(), 'initials')
 const isLoggedIn = toRef(useAuthStore(), 'isAuthenticated')
+const cartSize = toRef(useCartStore(), 'cartSize')
+
 const { handleLogout, isLoggingOut } = useAuthentication()
 
 const label = computed<string>(() => `${modalType.value} modal`)

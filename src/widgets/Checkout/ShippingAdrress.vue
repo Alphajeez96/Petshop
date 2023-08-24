@@ -30,17 +30,6 @@
         />
       </div>
 
-      <!-- City - state  -->
-      <div class="form-group flex gap-8">
-        <TextInput id="first-name" placeholder="City *" type="text" variant="tertiary" />
-        <TextInput
-          id="last-name"
-          placeholder="State/Province/Region *"
-          type="text"
-          variant="tertiary"
-        />
-      </div>
-
       <!-- Zip code - Country  -->
       <div class="form-group flex gap-8">
         <TextInput id="first-name" placeholder="Zip/Postal code *" type="text" variant="tertiary" />

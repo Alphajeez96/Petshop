@@ -24,6 +24,7 @@ declare module 'vue' {
     IconClose: typeof import('./src/components/Icons/IconClose.vue')['default']
     IconDropdown: typeof import('./src/components/Icons/IconDropdown.vue')['default']
     IconInfo: typeof import('./src/components/Icons/IconInfo.vue')['default']
+    IconPaymentMode: typeof import('./src/components/Icons/IconPaymentMode.vue')['default']
     IconSearch: typeof import('./src/components/Icons/IconSearch.vue')['default']
     IconSpinner: typeof import('./src/components/Icons/IconSpinner.vue')['default']
     Modal: typeof import('./src/components/Modal/index.vue')['default']
