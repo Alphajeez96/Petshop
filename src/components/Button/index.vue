@@ -30,7 +30,7 @@ interface Button {
   customStyles?: string
   disabled?: boolean
   loading?: boolean
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'tertiary'
 }
 
 const props = withDefaults(defineProps<Button>(), {
@@ -48,7 +48,7 @@ const computedClasses = computed<string>(() => `${props.variant} ${props.classes
 
 <style lang="scss" scoped>
 button {
-  @apply flex items-center  font-medium focus:outline-none;
+  @apply flex items-center font-medium focus:outline-none;
 
   &.primary {
     @apply bg-primary-green text-white;
@@ -56,6 +56,10 @@ button {
 
   &.secondary {
     @apply bg-inherit border border-white rounded;
+  }
+
+  &.tertiary {
+    @apply border border-[#4ec69080] rounded;
   }
 
   &:disabled {

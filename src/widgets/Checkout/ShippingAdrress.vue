@@ -56,8 +56,8 @@
       <div class="flex justify-end mt-6">
         <Button
           id="shipping-address-button"
-          class="h-"
           classes="h-9 rounded w-[6.875rem] box-shadow"
+          @click="$emit('handleStep', 1)"
         >
           <span class="text-white font-medium text-sm w-full">NEXT</span>
         </Button>
@@ -68,4 +68,8 @@
 
 <script setup lang="ts">
 import TextInput from '@/components/TextInput/index.vue'
+
+defineEmits<{
+  handleStep: [value: number]
+}>()
 </script>

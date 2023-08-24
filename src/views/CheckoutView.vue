@@ -16,7 +16,7 @@
     <!-- Forms Here -->
     <transition name="slide-fade">
       <div :key="currentStep" class="mt-20">
-        <component :is="currentStepComponent" />
+        <component :is="currentStepComponent" @handleStep="(value: number) => goToStep(value)" />
       </div>
     </transition>
   </section>
