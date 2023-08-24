@@ -23,7 +23,7 @@ import AppFooter from '@/components/Partials/AppFooter.vue'
 import SearchProducts from '@/widgets/Global/SearchProducts.vue'
 
 const route = useRoute()
-const excluded: string[] = ['forgot-password', 'reset-password', 'cart']
+const excluded: string[] = ['forgot-password', 'reset-password', 'cart', 'checkout']
 
 const hideSearchBar = computed<boolean>(() => excluded.includes(route?.name as string))
 </script>

@@ -48,13 +48,15 @@ import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
 import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const { addToCart } = useCartStore()
+
 const props = defineProps<{
   hasButton?: boolean
   loading: boolean
   product: Product
 }>()
-const router = useRouter()
+
 const isHovered: Ref<boolean> = ref(false)
 const productCategory = computed<string>(() =>
   capitalizeText(trimText(props.product?.category?.title!, 30))
