@@ -21,7 +21,9 @@
             {{ product?.category?.title }}
           </p>
 
-          <h3 class="text-[#000000de] text-[2.125rem] pt-4">{{ product?.price }} kn</h3>
+          <h3 class="text-[#000000de] text-[2.125rem] pt-4">
+            {{ formatCurrency(+product?.price) }}
+          </h3>
 
           <div class="mt-10 flex items-center cart-display" id="quantity-input">
             <el-input-number v-model="product.quantity" :min="1"></el-input-number>
@@ -57,7 +59,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
-import { trimText, retrieveFile } from '@/utils/global'
+import { trimText, retrieveFile, formatCurrency } from '@/utils/global'
 import Button from '@/components/Button/index.vue'
 import Remove from '@/components/Button/Remove.vue'
 

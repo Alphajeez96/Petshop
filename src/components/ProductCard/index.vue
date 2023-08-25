@@ -25,7 +25,7 @@
         {{ productCategory }}
       </p>
 
-      <p class="text-black text-xl font-medium pt-1">{{ product?.price }} Kn</p>
+      <p class="text-black text-xl font-medium pt-1">{{ formatCurrency(+product?.price) }}</p>
 
       <!-- Action Button Here -->
       <div class="mt-3" v-if="hasButton">
@@ -42,7 +42,7 @@
 import { ref, computed, type Ref } from 'vue'
 import { type Product } from '@/types/products'
 import { useCartStore } from '@/stores/cart'
-import { trimText, capitalizeText, retrieveFile, debounce } from '@/utils/global'
+import { trimText, capitalizeText, retrieveFile, debounce, formatCurrency } from '@/utils/global'
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'

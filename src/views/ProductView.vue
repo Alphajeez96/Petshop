@@ -28,7 +28,7 @@
         <!-- Action Button region -->
         <SkeletonLoader v-if="loading" custom-classes="h-[100px] w-full mt-12" />
         <div v-else class="mt-12">
-          <h2 class="text-[#000000de] text-6xl">{{ product?.price }} Kn</h2>
+          <h2 class="text-[#000000de] text-6xl">{{ formatCurrency(+product?.price!) }}</h2>
           <div class="flex mt-7">
             <Remove v-if="isInCart" height="3rem" @click="handleProductRemoval(product!)" />
 
@@ -71,7 +71,14 @@ import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
 import { type Breadcrumb } from '@/types/global'
 import { type Product } from '@/types/products'
-import { retrieveFile, capitalizeText, trimText, scrollToTop, debounce } from '@/utils/global'
+import {
+  retrieveFile,
+  capitalizeText,
+  trimText,
+  scrollToTop,
+  debounce,
+  formatCurrency
+} from '@/utils/global'
 import { ElInputNumber } from 'element-plus'
 import BreadcrumbVue from '@/widgets/Global/Breadcrumb.vue'
 import Button from '@/components/Button/index.vue'
