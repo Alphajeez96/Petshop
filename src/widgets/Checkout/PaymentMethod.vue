@@ -9,7 +9,7 @@
         :key="method.tag"
         class="method-holder box-shadow"
         :class="{ active: activeMethod === method.tag }"
-        @click="activeMethod = method.tag"
+        @click="setActiveMethod(method.tag)"
       >
         <IconPaymentMode :tag="method.tag" :isActive="activeMethod === method.tag" />
         <p class="text-xl text-[#000000de] font-medium pt-2">{{ method.title }}</p>
@@ -28,7 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { toRef } from 'vue'
+import { type PaymentTag } from '@/types/checkout'
+import { useCheckoutStore } from '@/stores/checkout'
 import CardDetails from './CardDetailsForm.vue'
 import CashDelivery from './CashDeliveryForm.vue'
 import BankTransfer from './BankTransferForm.vue'
@@ -36,7 +38,7 @@ import IconPaymentMode from '@/components/Icons/IconPaymentMode.vue'
 
 interface Method {
   title: string
-  tag: string
+  tag: PaymentTag
 }
 
 const methods: Method[] = [
@@ -45,7 +47,8 @@ const methods: Method[] = [
   { title: 'Bank transfer', tag: 'bank_transfer' }
 ]
 
-const activeMethod: Ref<string> = ref('cash_on_delivery')
+const { setActiveMethod } = useCheckoutStore()
+const activeMethod = toRef(useCheckoutStore(), 'activeMethod')
 </script>
 
 <style lang="scss" scoped>

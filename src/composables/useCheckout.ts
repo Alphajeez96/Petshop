@@ -66,6 +66,7 @@ export const useCheckout = () => {
     cart,
     shippingAddress: checkout.shippingAddress,
     billingAddress: checkout.shippingAddress,
+    activeMethod: checkout.activeMethod,
     totalCartValue,
     deliveryCharge,
     subTotalCartValue,

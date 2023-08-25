@@ -1,8 +1,9 @@
 import moment from 'moment'
 import { type Blob } from '@/types/global'
 
-export const retrieveFile = (file: string) => {
-  if (file) return `http://pet-shop.buckhill.com.hr/api/v1/file/${file}`
+export const retrieveFile = (file: string): string => {
+  if (!file) return ''
+  return `http://pet-shop.buckhill.com.hr/api/v1/file/${file}`
 }
 
 export const retrieveBlobData = (data: Blob[]): Blob[] => {
@@ -25,21 +26,19 @@ export const getRandomArraySubset = <T>(dataArray: T[], numberOfItems: number): 
 }
 
 export const trimText = (text: string, maxLength: number): string => {
-  if (text) {
-    if (text.length <= maxLength) {
-      return text
-    } else {
-      return text.substring(0, maxLength - 3) + '...'
-    }
+  if (!text) return ''
+
+  if (text.length <= maxLength) {
+    return text
+  } else {
+    return text.substring(0, maxLength - 3) + '...'
   }
-  return ''
 }
 
 export const capitalizeText = (value: string): string => {
-  if (value) {
-    return value.charAt(0).toUpperCase() + value.slice(1)
-  }
-  return ''
+  if (!value) return ''
+
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
 export const debounce = (func: () => void, delay: number): (() => void) => {
@@ -50,7 +49,7 @@ export const debounce = (func: () => void, delay: number): (() => void) => {
   }
 }
 
-export const scrollToTop = () => {
+export const scrollToTop = (): void => {
   window.scrollTo({
     top: 0
   })
@@ -66,13 +65,25 @@ export const getInitials = (firstName: string, lastName: string): string => {
 
 export const formatDate = (value: string): string => {
   if (!value) return ''
+
   return moment(value).format('D. M. YYYY')
 }
 
-export function formatCurrency(value: number): string {
+export const formatCurrency = (value: number): string => {
+  if (!value) return ''
+
   const formattedValue = value.toFixed(2).replace('.', ',')
   const parts = formattedValue.split(',')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
   return `${parts.join(',')} Kn`
+}
+
+export const underscoreFormatter = (text: string): string => {
+  if (!text) return ''
+
+  const words = text.split('_')
+  const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+
+  return capitalizedWords.join(' ')
 }

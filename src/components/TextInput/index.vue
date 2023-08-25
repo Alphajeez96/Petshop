@@ -28,7 +28,7 @@ interface TextInput {
   id: string
   placeholder: string
   type: 'text' | 'email' | 'password' | 'number'
-  modelValue: string
+  modelValue: string | number
   classes?: string
   variant?: 'primary' | 'secondary' | 'tertiary'
   disabled?: boolean

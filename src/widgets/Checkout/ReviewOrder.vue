@@ -10,11 +10,40 @@
         </div>
 
         <div class="px-5 mt-5">
-          <p class="inner-header">{{ retrieveName(checkout.shippingAddress) }}</p>
-          <p class="inner-text">{{ checkout.shippingAddress?.addressLine1 }}</p>
-          <p class="inner-text">{{ checkout.shippingAddress?.addressLine2 }}</p>
-          <p class="inner-text">{{ retrieveRegion(checkout.shippingAddress) }}</p>
-          <p class="inner-text">{{ retrieveCountry(checkout.billingAddress) }}</p>
+          <p class="inner-header">
+            <span>First and Last name</span>
+            <span class="content">
+              {{ retrieveName(checkout.shippingAddress) }}
+            </span>
+          </p>
+
+          <p class="inner-text">
+            <span>Address Line 1</span>
+            <span class="content">
+              {{ checkout.shippingAddress?.addressLine1 }}
+            </span>
+          </p>
+
+          <p class="inner-text">
+            <span>Address Line 2</span>
+            <span class="content">
+              {{ checkout.shippingAddress?.addressLine2 }}
+            </span>
+          </p>
+
+          <p class="inner-text">
+            <span>City, State/Province/Region</span>
+            <span class="content">
+              {{ retrieveRegion(checkout.shippingAddress) }}
+            </span>
+          </p>
+
+          <p class="inner-text">
+            <span>ZIP/Postal Code, Country </span>
+            <span class="content">
+              {{ retrieveCountry(checkout.shippingAddress) }}
+            </span>
+          </p>
         </div>
       </section>
 
@@ -25,19 +54,50 @@
           <a class="action-button" @click="$emit('handleStep', 1)">Edit</a>
         </div>
 
-        <div class="px-5 mt-5">
-          <p class="inner-header">{{ retrieveName(checkout.billingAddress) }}</p>
-          <p class="inner-text">{{ checkout.billingAddress?.addressLine1 }}</p>
-          <p class="inner-text">{{ checkout.billingAddress?.addressLine2 }}</p>
-          <p class="inner-text">{{ retrieveRegion(checkout.billingAddress) }}</p>
-          <p class="inner-text">{{ retrieveCountry(checkout.billingAddress) }}</p>
+        <div class="mt-5">
+          <div class="px-5 mt-5">
+            <p class="inner-header">
+              <span>First and Last name</span>
+              <span class="content">
+                {{ retrieveName(checkout.billingAddress) }}
+              </span>
+            </p>
+
+            <p class="inner-text">
+              <span>Address Line 1</span>
+              <span class="content">
+                {{ checkout.billingAddress?.addressLine1 }}
+              </span>
+            </p>
+
+            <p class="inner-text">
+              <span>Address Line 2</span>
+              <span class="content">
+                {{ checkout.billingAddress?.addressLine2 }}
+              </span>
+            </p>
+
+            <p class="inner-text">
+              <span>City, State/Province/Region</span>
+              <span class="content">
+                {{ retrieveRegion(checkout.billingAddress) }}
+              </span>
+            </p>
+
+            <p class="inner-text">
+              <span>ZIP/Postal Code, Country </span>
+              <span class="content">
+                {{ retrieveCountry(checkout.billingAddress) }}
+              </span>
+            </p>
+          </div>
         </div>
 
         <div class="divider"></div>
 
         <div class="px-5 mt-5">
           <p class="inner-header">Type of Payment</p>
-          <p class="inner-text">Credit Card</p>
+          <p class="inner-text">{{ underscoreFormatter(checkout.activeMethod) }}</p>
         </div>
       </section>
 
@@ -112,11 +172,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, toRef, unref } from 'vue'
+import { onMounted } from 'vue'
 import { type Address } from '@/types/checkout'
-import { retrieveFile } from '@/utils/global'
-import { formatCurrency, debounce } from '@/utils/global'
 import { useCheckout } from '@/composables/useCheckout'
+import {
+  formatCurrency,
+  debounce,
+  retrieveFile,
+  underscoreFormatter,
+  scrollToTop
+} from '@/utils/global'
 
 defineEmits<{
   handleStep: [value: number]
@@ -124,12 +189,18 @@ defineEmits<{
 
 onMounted(() => {
   checkout.getOrderStatus()
+  scrollToTop()
 })
 
 const checkout = useCheckout()
-const retrieveName = (data: Address): string => `${data.firstName} ${data.lastName}`
-const retrieveRegion = (data: Address): string => `${data.city}, ${data.state}`
-const retrieveCountry = (data: Address): string => `${data.zip}, ${data.country}`
+const retrieveName = (data: Address): string => `${data?.firstName} ${data?.lastName}`
+
+const retrieveRegion = (data: Address): string => {
+  return `${data.city ? data.city + ', ' : ''}${data.state ?? ''}`
+}
+const retrieveCountry = (data: Address): string => {
+  return `${data.zip ? data.zip + ', ' : ''}${data.country ?? ''}`
+}
 
 const handleOrder = debounce(() => {
   checkout.placeOrder()
@@ -155,11 +226,15 @@ const handleOrder = debounce(() => {
   }
 
   .inner-header {
-    @apply text-[#000000de] pb-1;
+    @apply text-[#000000de] pb-1 flex;
   }
 
   .inner-text {
-    @apply text-primary-gray text-sm pb-0.5;
+    @apply text-primary-gray text-sm pb-0.5 flex;
+  }
+
+  .content {
+    @apply ml-auto text-right w-4/6;
   }
 }
 
