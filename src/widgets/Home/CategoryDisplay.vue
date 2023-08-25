@@ -22,9 +22,9 @@
 import { watch } from 'vue'
 import { Slide } from 'vue3-carousel'
 import { type Categories } from '@/types/products'
+import { useFetchCategoryProducts } from '@/composables/useProducts'
 import Carousel from '@/components/Carousel/index.vue'
 import ProductCard from '@/components/ProductCard/index.vue'
-import { useFetchCategoryProducts } from '@/composables/useProducts'
 
 const { loading, products, fetchProductList } = useFetchCategoryProducts()
 

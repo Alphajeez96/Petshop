@@ -48,7 +48,7 @@
               <el-input-number
                 :min="1"
                 v-model="quantity"
-                @change="(value) => updateQuantity(product!, value!)"
+                @change="(value: number) => updateQuantity(product!, value!)"
               />
             </div>
           </div>
@@ -79,7 +79,6 @@ import {
   debounce,
   formatCurrency
 } from '@/utils/global'
-import { ElInputNumber } from 'element-plus'
 import BreadcrumbVue from '@/widgets/Global/Breadcrumb.vue'
 import Button from '@/components/Button/index.vue'
 import Remove from '@/components/Button/Remove.vue'

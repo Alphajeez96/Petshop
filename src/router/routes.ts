@@ -4,7 +4,7 @@ import ProductView from '../views/ProductView.vue'
 import ForgotPasswordView from '../views/ForgotPasswordView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
 import CartView from '../views/CartView.vue'
-import checkoutView from '../views/checkoutView.vue'
+import CheckoutView from '../views/CheckoutView.vue'
 
 const routes = [
   {
@@ -46,10 +46,8 @@ const routes = [
   {
     path: '/checkout',
     name: 'checkout',
-    component: checkoutView
+    component: CheckoutView
   }
-
-  //TODO: names =>  shop, products,forgot-password, rese
 ]
 
 export default routes

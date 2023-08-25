@@ -39,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { ref, computed, type Ref } from 'vue'
 import { type Product } from '@/types/products'
 import { useCartStore } from '@/stores/cart'
@@ -46,7 +47,6 @@ import { trimText, capitalizeText, retrieveFile, debounce, formatCurrency } from
 import Button from '@/components/Button/index.vue'
 import IconCart from '@/components/Icons/IconCart.vue'
 import SkeletonLoader from '@/widgets/Global/SkeletonLoader.vue'
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const { addToCart } = useCartStore()

@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import { ElSelect, ElOption } from 'element-plus'
 
 interface Sort {
   title: string

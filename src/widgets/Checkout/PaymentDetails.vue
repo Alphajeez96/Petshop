@@ -133,6 +133,10 @@ import { useCheckoutStore } from '@/stores/checkout'
 import TextInput from '@/components/TextInput/index.vue'
 import PaymentMethod from './PaymentMethod.vue'
 
+defineEmits<{
+  handleStep: [value: number]
+}>()
+
 const buttonClass: string = 'h-9 rounded w-[6.875rem] box-shadow'
 const spanClass: string = 'font-medium text-sm w-full uppercase'
 
@@ -144,8 +148,4 @@ const isPaymentSame = toRef(useCheckoutStore(), 'isPaymentSame')
 onMounted(() => {
   if (isShippingSame.value) updateAddress(billingAddress, shippingAddress)
 })
-
-defineEmits<{
-  handleStep: [value: number]
-}>()
 </script>

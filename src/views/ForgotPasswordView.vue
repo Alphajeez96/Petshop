@@ -21,7 +21,6 @@
     </p>
 
     <form @submit.prevent="recoverPassword" class="mt-10">
-      <!-- Email Here -->
       <div class="form-group">
         <TextInput
           id="email"

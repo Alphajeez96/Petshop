@@ -30,6 +30,16 @@ export const useAuthStore = defineStore(
     const logout = () => {
       token.value = ''
       user.value = undefined
+      clearLocalStorage()
+    }
+
+    const clearLocalStorage = () => {
+      const storeItems: string[] = ['pet-store__cart', 'pet-store__checkout']
+
+      storeItems.forEach((item) => {
+        localStorage.removeItem(item)
+      })
+
       clearCart()
       router.push('/')
     }

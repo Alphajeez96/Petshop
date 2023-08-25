@@ -82,6 +82,8 @@ import UserModal from '@/widgets/User/UserModal.vue'
 const routes: string[] = ['products', 'promotions', 'blog']
 const buttonClasses: string = 'text-[15px] text-white h-12 uppercase px-5'
 
+const { handleLogout, isLoggingOut } = useAuthentication()
+
 const isUserModal: Ref<boolean> = ref(false)
 const isModal: Ref<boolean> = ref(false)
 const isOpen: Ref<boolean> = ref(false)
@@ -90,8 +92,6 @@ const modalType: Ref<string> = ref('login')
 const initials = toRef(useAuthStore(), 'initials')
 const isLoggedIn = toRef(useAuthStore(), 'isAuthenticated')
 const cartSize = toRef(useCartStore(), 'cartSize')
-
-const { handleLogout, isLoggingOut } = useAuthentication()
 
 const label = computed<string>(() => `${modalType.value} modal`)
 
