@@ -25,16 +25,16 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import { onMounted, ref, type Ref } from 'vue'
 import { type Breadcrumb } from '@/types/global'
+import { useFetchCategoryProducts } from '@/composables/useProducts'
 import PriceRange from '@/widgets/Product/PriceRange.vue'
 import BrandFilter from '@/widgets/Product/BrandFilter.vue'
 import CategoryFilter from '@/widgets/Product/CategoryFilter.vue'
 import BreadcrumbVue from '@/widgets/Global/Breadcrumb.vue'
 import PriceSort from '@/widgets/Product/PriceSort.vue'
 import ProductDisplay from '@/widgets/Product/ProductDisplay.vue'
-import { useFetchCategoryProducts } from '@/composables/useProducts'
-import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const { loading, products, fetchProductList } = useFetchCategoryProducts()

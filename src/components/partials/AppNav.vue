@@ -26,7 +26,7 @@
 
     <!-- Routes Here -->
     <ul>
-      <li v-for="(route, i) in routes" :key="i" @click="handleRoute(route)">
+      <li v-for="(route, i) in routes" :key="i" @click="handleRoute(route)" class="relative">
         {{ route }}
         <span v-if="i === 0" class="ml-0.5">
           <IconDropdown :isOpen="isOpen" />

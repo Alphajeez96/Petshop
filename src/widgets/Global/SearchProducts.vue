@@ -28,11 +28,11 @@
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue'
 import { debounce } from '@/utils/global'
+import { useRouter } from 'vue-router'
 import { useFetchCategoryProducts } from '@/composables/useProducts'
 import TextInput from '@/components/TextInput/index.vue'
 import IconSearch from '@/components/Icons/IconSearch.vue'
 import Dropdown from '@/widgets/Global/Dropdown.vue'
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const { products, fetchProductList } = useFetchCategoryProducts()

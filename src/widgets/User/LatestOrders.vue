@@ -3,9 +3,8 @@
     <p class="pb-5">Latest Orders</p>
 
     <div class="px-5">
-      <Table :columns="columns" :data="tableData">
+      <Table :columns="columns" :data="[]">
         <template #name>
-          <!-- <el-button size="small">Edit</el-button> -->
           <Pill text="test" />
         </template>
 
@@ -22,38 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import Table from '@/components/Table/index.vue'
-import Pill from '@/widgets/Global/Pill.vue'
 import { type Column } from '@/types/global'
-
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }
-]
+import Pill from '@/widgets/Global/Pill.vue'
+import Table from '@/components/Table/index.vue'
 
 const columns: Column[] = [
   { prop: 'date', label: 'Order UUID' },
