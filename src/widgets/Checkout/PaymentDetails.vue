@@ -12,6 +12,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.firstName"
+          :error="billingValidations.firstName?.$error"
         />
         <TextInput
           id="last-name"
@@ -20,6 +21,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.lastName"
+          :error="billingValidations.lastName?.$error"
         />
       </div>
 
@@ -32,6 +34,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.addressLine1"
+          :error="billingValidations.addressLine1?.$error"
         />
       </div>
 
@@ -44,6 +47,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.addressLine2"
+          :error="billingValidations.addressLine2?.$error"
         />
       </div>
 
@@ -56,6 +60,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.city"
+          :error="billingValidations.city?.$error"
         />
         <TextInput
           id="billing-state"
@@ -64,6 +69,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.state"
+          :error="billingValidations.state?.$error"
         />
       </div>
 
@@ -76,6 +82,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.zip"
+          :error="billingValidations.zip?.$error"
         />
         <TextInput
           id="billing-country"
@@ -84,6 +91,7 @@
           variant="tertiary"
           :disabled="isShippingSame"
           v-model="billingAddress.country"
+          :error="billingValidations.country?.$error"
         />
       </div>
 
@@ -128,7 +136,7 @@ import PaymentMethod from './PaymentMethod.vue'
 const buttonClass: string = 'h-9 rounded w-[6.875rem] box-shadow'
 const spanClass: string = 'font-medium text-sm w-full uppercase'
 
-const { billingAddress, shippingAddress, updateAddress } = useCheckoutStore()
+const { billingAddress, shippingAddress, updateAddress, billingValidations } = useCheckoutStore()
 
 const isShippingSame = toRef(useCheckoutStore(), 'isShippingSame')
 const isPaymentSame = toRef(useCheckoutStore(), 'isPaymentSame')

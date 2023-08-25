@@ -12,19 +12,23 @@ export const useCheckout = () => {
 
   const checkout = useCheckoutStore()
   const { getOrderStatuses, createPayment } = checkoutApi()
+
+  //   const {} = useCheckoutStore
   const { cart, totalCartValue, deliveryCharge, subTotalCartValue } = useCartStore()
 
   const placeOrder = async () => {
     try {
-      loading.value = true
       console.log('LOAD CHECK:::', loading.value)
 
-      const isShippingValid = await checkout.shippingAddressValidations.$validate()
-      const isBillingValid = await checkout.billingAddressValidations.$validate()
+      const isShippingValid = await checkout.shippingValidations.$validate()
+      const isBillingValid = await checkout.billingValidations.$validate()
 
       if (!isBillingValid || !isShippingValid) {
-        return toast.error('Please ensure all required fields have been supplied!')
+        toast.error('Please ensure all required fields have been supplied!')
+        return
       }
+
+      loading.value = true
 
       // console.log('CHECK', isBillingValid, 'check3::', isShippingValid)
 
@@ -64,15 +68,15 @@ export const useCheckout = () => {
 
   return {
     cart,
-    shippingAddress: checkout.shippingAddress,
-    billingAddress: checkout.shippingAddress,
-    activeMethod: checkout.activeMethod,
-    totalCartValue,
-    deliveryCharge,
-    subTotalCartValue,
     loading,
     placeOrder,
+    totalCartValue,
+    deliveryCharge,
+    getOrderStatus,
     createNewPayment,
-    getOrderStatus
+    subTotalCartValue,
+    shippingAddress: checkout.shippingAddress,
+    billingAddress: checkout.billingAddress,
+    activeMethod: checkout.activeMethod
   }
 }

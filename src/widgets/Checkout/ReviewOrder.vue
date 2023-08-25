@@ -137,13 +137,11 @@
         </div>
 
         <div class="px-5 mt-3">
-          <!-- Subtotal  -->
           <div class="flex pb-1">
             <p class="inner-text">Subtotal before delivery</p>
             <p class="inner-text ml-auto">{{ formatCurrency(checkout.subTotalCartValue) }}</p>
           </div>
 
-          <!-- Delivery Charge -->
           <div class="flex">
             <p class="inner-text">Delivery Charge</p>
             <p class="inner-text ml-auto">{{ formatCurrency(checkout.deliveryCharge) }}</p>

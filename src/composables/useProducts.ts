@@ -15,7 +15,7 @@ export const useFetchCategoryProducts = () => {
 
       products.value = data
     } catch {
-      // No need for specific error handling in this case
+      // catered for by error handler
     } finally {
       loading.value = false
     }

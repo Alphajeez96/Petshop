@@ -32,9 +32,9 @@ export const useAuthentication = () => {
   }
 
   return {
-    setSessionToken,
     setUserData,
     handleLogout,
-    isLoggingOut
+    isLoggingOut,
+    setSessionToken
   }
 }

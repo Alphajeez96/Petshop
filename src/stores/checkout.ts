@@ -73,14 +73,15 @@ export const useCheckoutStore = defineStore(
       firstName: { required },
       lastName: { required },
       addressLine1: { required },
+      addressLine2: { required },
       city: { required },
       state: { required },
       zip: { required },
       country: { required }
     }
 
-    const shippingAddressValidations = useVuelidate(addressValidation, shippingAddress)
-    const billingAddressValidations = useVuelidate(addressValidation, billingAddress)
+    const shippingValidations = useVuelidate(addressValidation, shippingAddress)
+    const billingValidations = useVuelidate(addressValidation, billingAddress)
 
     const updateAddress = (target: Address, payload: Address) => {
       Object.assign(target, payload)
@@ -91,7 +92,6 @@ export const useCheckoutStore = defineStore(
     }
 
     return {
-      addressObject,
       isShippingSame,
       isPaymentSame,
       shippingAddress,
@@ -102,8 +102,8 @@ export const useCheckoutStore = defineStore(
       creditCardDetails,
       cashDeliveryDetails,
       bankTransferDetails,
-      shippingAddressValidations,
-      billingAddressValidations
+      shippingValidations,
+      billingValidations
     }
   },
 
