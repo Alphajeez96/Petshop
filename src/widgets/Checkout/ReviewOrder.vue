@@ -160,6 +160,7 @@
         <Button
           id="order-button"
           classes="px-5 h-12 rounded box-shadow mt-10 w-full mx-5"
+          :disabled="!checkout.cart.length"
           @click="handleOrder"
         >
           <span class="ml-2 uppercase text-[0.938rem] font-medium w-full">place order</span>

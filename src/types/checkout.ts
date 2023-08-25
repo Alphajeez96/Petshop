@@ -1,5 +1,7 @@
-type Text = 'Credit Card' | 'Cash on delivery' | 'Bank transfer'
+import { type Product } from './products'
 
+type Text = 'Credit Card' | 'Cash on delivery' | 'Bank transfer'
+export type OrderProduct = Omit<Product, 'category' | 'price' | 'title' | 'metadata'>
 export type PaymentTag = 'credit_card' | 'cash_on_delivery' | 'bank_transfer'
 
 export interface Address {
@@ -12,10 +14,10 @@ export interface Address {
   zip: string
   country: string
 }
-// export interface Payment {
-//   details: CreditCard | CashDelivery | BankTransfer
-//   type: PaymentTag
-// }
+export interface Payment {
+  details: CreditCard | CashDelivery | BankTransfer
+  type: PaymentTag
+}
 
 export interface CreditCard {
   cardNumber: string
@@ -35,4 +37,11 @@ export interface BankTransfer {
   refcode: string
   swiftCode: string
   text: Text
+}
+
+export interface Order {
+  address: string
+  order_status_uuid: string
+  payment_uuid: string
+  products: Array<OrderProduct>
 }

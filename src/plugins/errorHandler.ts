@@ -23,7 +23,9 @@ const showValidationNotification = (errors: ValidationError, title: string): voi
     return showDefaultNotification(title)
   }
 
-  const message = Object.values(errors)[0][0]
+  const firstErrorValue = Object.values(errors)[0]
+  const message = Array.isArray(firstErrorValue) ? firstErrorValue[0] : title
+
   showDefaultNotification(message)
 }
 

@@ -39,14 +39,13 @@ const createAxiosInstance = (): AxiosInstance => {
       return response.data
     },
     (error) => {
+      errorHandler(error)
+
       if (error.response?.status === 401) {
         const router = useRouter()
         router.push('/')
       }
 
-      // Handle response error
-      //   Error Handler here
-      errorHandler(error)
       return Promise.reject(error)
     }
   )

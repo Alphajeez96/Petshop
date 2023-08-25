@@ -3,7 +3,7 @@ export interface Product extends Blob {
   uuid: string
   category: Categories
   price: string
-  description: string
+  description?: string
   quantity?: number
 }
 

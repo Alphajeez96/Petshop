@@ -1,69 +1,99 @@
-import { ref, computed, unref, type Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useCheckoutStore } from '@/stores/checkout'
+import {
+  type Order,
+  type OrderProduct,
+  type CashDelivery,
+  type CreditCard,
+  type BankTransfer
+} from '@/types/checkout'
 import checkoutApi from '@/api/checkoutApi'
 import { useToast } from 'vue-toastification'
 
 export const useCheckout = () => {
+  type PaymentDetails = {
+    cash_on_delivery: CashDelivery
+    credit_card: CreditCard
+    bank_transfer: BankTransfer
+  }
+
   const toast = useToast()
 
-  const loading: Ref<boolean> = ref(false)
-  const payment_uuid: Ref<string> = ref('')
-
   const checkout = useCheckoutStore()
-  const { getOrderStatuses, createPayment } = checkoutApi()
-
-  //   const {} = useCheckoutStore
+  const { createPayment, createOrder, getOrderStatuses } = checkoutApi()
   const { cart, totalCartValue, deliveryCharge, subTotalCartValue } = useCartStore()
 
-  const placeOrder = async () => {
-    try {
-      console.log('LOAD CHECK:::', loading.value)
+  const loading: Ref<boolean> = ref(false)
+  const order_status_uuid: Ref<string> = ref('')
 
-      const isShippingValid = await checkout.shippingValidations.$validate()
-      const isBillingValid = await checkout.billingValidations.$validate()
-
-      if (!isBillingValid || !isShippingValid) {
-        toast.error('Please ensure all required fields have been supplied!')
-        return
-      }
-
-      loading.value = true
-
-      // console.log('CHECK', isBillingValid, 'check3::', isShippingValid)
-
-      console.log('isLoading::', loading.value)
-
-      // const response = await
-    } catch {
-      // catered for by error handler
-    } finally {
-      loading.value = false
+  const paymentDetails: Ref<PaymentDetails> = computed(() => {
+    return {
+      cash_on_delivery: checkout.cashDeliveryDetails,
+      credit_card: checkout.creditCardDetails,
+      bank_transfer: checkout.bankTransferDetails
     }
+  })
+
+  const placeOrder = async () => {
+    const isShippingValid = await checkout.shippingValidations.$validate()
+    const isBillingValid = await checkout.billingValidations.$validate()
+
+    if (!isBillingValid || !isShippingValid) {
+      toast.error('Please ensure all required fields have been supplied!')
+      return
+    }
+
+    loading.value = true
+    await createNewPayment()
+    loading.value = false
   }
 
   const createNewPayment = async () => {
-    try {
-      const response = await createPayment()
+    const response = await createPayment({
+      details: paymentDetails.value[checkout.activeMethod],
+      type: checkout.activeMethod
+    })
 
-      console.log('TEST:::', response)
-    } catch {
-      //
-    } finally {
-      //
+    if (response.data) {
+      await handleOrderCreation(response.data?.uuid)
     }
   }
 
-  const getOrderStatus = () => {
-    getOrderStatuses().then((response) => {
-      if (response.data.length) {
-        const activeOrder = response.data.find((item: { title: string }) => item.title === 'open')
+  const handleOrderCreation = async (payment_uuid: string) => {
+    const shippingAddressLine1: string = checkout.shippingAddress?.addressLine1
+    const billingAddressLine1: string = checkout.billingAddress?.addressLine1
 
-        if (activeOrder) {
-          payment_uuid.value = activeOrder.uuid
-        }
+    const products: OrderProduct[] = cart.map(({ quantity, uuid }) => ({
+      quantity,
+      uuid
+    }))
+
+    const address: { shipping: string; billing: string } = {
+      shipping: shippingAddressLine1,
+      billing: billingAddressLine1
+    }
+
+    const payload: Order = {
+      address: JSON.stringify(address),
+      order_status_uuid: order_status_uuid.value,
+      payment_uuid,
+      products
+    }
+
+    await createOrder(payload)
+  }
+
+  const getOrderStatus = async () => {
+    const response = await getOrderStatuses()
+
+    if (response.data.length) {
+      const order = response.data.find((item: { title: string }) => item.title === 'open')
+
+      if (order) {
+        order_status_uuid.value = order.uuid
       }
-    })
+    }
   }
 
   return {
@@ -73,7 +103,6 @@ export const useCheckout = () => {
     totalCartValue,
     deliveryCharge,
     getOrderStatus,
-    createNewPayment,
     subTotalCartValue,
     shippingAddress: checkout.shippingAddress,
     billingAddress: checkout.billingAddress,

@@ -1,15 +1,16 @@
 import $axios from '@/axiosConfig'
+import { type Payment, type Order } from '@/types/checkout'
 
 export default () => ({
   async getOrderStatuses() {
     return await $axios.get('/order-statuses')
   },
 
-  async createPayment() {
-    return await $axios.post('/payment/create')
+  async createPayment(payload: Payment) {
+    return await $axios.post('/payment/create', payload)
   },
 
-  async createOrder() {
-    return await $axios.post('/order/create')
+  async createOrder(payload: Order) {
+    return await $axios.post('/order/create', payload)
   }
 })
