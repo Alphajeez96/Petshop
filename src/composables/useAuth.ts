@@ -22,7 +22,7 @@ export const useAuthentication = () => {
     const { logUserOut } = authApi()
 
     logUserOut()
-      .then((_response) => {
+      .then(() => {
         logout()
       })
 
