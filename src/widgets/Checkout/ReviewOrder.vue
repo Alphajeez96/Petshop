@@ -10,10 +10,11 @@
         </div>
 
         <div class="px-5 mt-5">
-          <p class="inner-header">First and last name</p>
-          <p class="inner-text">Address Line 1</p>
-          <p class="inner-text">Address Line 2</p>
-          <p class="inner-text">City, state/Province/Region</p>
+          <p class="inner-header">{{ retrieveName(checkout.shippingAddress) }}</p>
+          <p class="inner-text">{{ checkout.shippingAddress?.addressLine1 }}</p>
+          <p class="inner-text">{{ checkout.shippingAddress?.addressLine2 }}</p>
+          <p class="inner-text">{{ retrieveRegion(checkout.shippingAddress) }}</p>
+          <p class="inner-text">{{ retrieveCountry(checkout.billingAddress) }}</p>
         </div>
       </section>
 
@@ -25,10 +26,11 @@
         </div>
 
         <div class="px-5 mt-5">
-          <p class="inner-header">First and last name</p>
-          <p class="inner-text">Address Line 1</p>
-          <p class="inner-text">Address Line 2</p>
-          <p class="inner-text">City, state/Province/Region</p>
+          <p class="inner-header">{{ retrieveName(checkout.billingAddress) }}</p>
+          <p class="inner-text">{{ checkout.billingAddress?.addressLine1 }}</p>
+          <p class="inner-text">{{ checkout.billingAddress?.addressLine2 }}</p>
+          <p class="inner-text">{{ retrieveRegion(checkout.billingAddress) }}</p>
+          <p class="inner-text">{{ retrieveCountry(checkout.billingAddress) }}</p>
         </div>
 
         <div class="divider"></div>
@@ -48,23 +50,27 @@
 
         <!-- Products here -->
         <div
-          class="product-holder border-b border-b-[#f7f7f7] p-5 flex gap-4"
-          v-for="i in 3"
-          :key="i"
+          class="product-holder border-b border-b-[#f7f7f7] p-5 flex gap-8"
+          v-for="item in checkout.cart"
+          :key="item.uuid"
         >
           <div class="image-holder h-24 w-24">
-            <img src="../../assets/images/product.png" alt="product" class="object-contain" />
+            <img
+              :src="retrieveFile(item.metadata?.image)"
+              :alt="item.title"
+              class="h-[inherit] w-[inherit] object-contain"
+            />
           </div>
 
           <div class="w-4/5">
-            <h5 class="outer-header underline">Brit care abundance</h5>
-            <p class="text-primary-gray py-1">Duck & rice -</p>
-            <p class="outer-header">200 kn</p>
+            <h5 class="outer-header underline">{{ item.title }}</h5>
+            <p class="text-primary-gray py-1" v-capitalize>{{ item.category?.title }} -</p>
+            <p class="outer-header">{{ formatCurrency(+item.price) }}</p>
           </div>
         </div>
       </section>
 
-      <!-- Order  Summary -->
+      <!-- Order Summary -->
       <section class="region-holder">
         <div class="segment-holder">
           <h5 class="caption">Summary</h5>
@@ -74,13 +80,13 @@
           <!-- Subtotal  -->
           <div class="flex pb-1">
             <p class="inner-text">Subtotal before delivery</p>
-            <p class="inner-text ml-auto">400,00 kn</p>
+            <p class="inner-text ml-auto">{{ formatCurrency(checkout.subTotalCartValue) }}</p>
           </div>
 
           <!-- Delivery Charge -->
           <div class="flex">
-            <p class="inner-text">Subtotal before delivery</p>
-            <p class="inner-text ml-auto">400,00 kn</p>
+            <p class="inner-text">Delivery Charge</p>
+            <p class="inner-text ml-auto">{{ formatCurrency(checkout.deliveryCharge) }}</p>
           </div>
         </div>
 
@@ -88,12 +94,16 @@
 
         <div class="flex text-[#000000de] px-5 mt-3">
           <p class="">Total</p>
-          <p class="ml-auto">125,00 Kn</p>
+          <p class="ml-auto">{{ formatCurrency(checkout.totalCartValue) }}</p>
         </div>
       </section>
 
       <div>
-        <Button id="order-button" classes="px-5 h-12 rounded box-shadow mt-10 w-full mx-5">
+        <Button
+          id="order-button"
+          classes="px-5 h-12 rounded box-shadow mt-10 w-full mx-5"
+          @click="handleOrder"
+        >
           <span class="ml-2 uppercase text-[0.938rem] font-medium w-full">place order</span>
         </Button>
       </div>
@@ -102,9 +112,28 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, toRef, unref } from 'vue'
+import { type Address } from '@/types/checkout'
+import { retrieveFile } from '@/utils/global'
+import { formatCurrency, debounce } from '@/utils/global'
+import { useCheckout } from '@/composables/useCheckout'
+
 defineEmits<{
   handleStep: [value: number]
 }>()
+
+onMounted(() => {
+  checkout.getOrderStatus()
+})
+
+const checkout = useCheckout()
+const retrieveName = (data: Address): string => `${data.firstName} ${data.lastName}`
+const retrieveRegion = (data: Address): string => `${data.city}, ${data.state}`
+const retrieveCountry = (data: Address): string => `${data.zip}, ${data.country}`
+
+const handleOrder = debounce(() => {
+  checkout.placeOrder()
+}, 100)
 </script>
 
 <style lang="scss" scoped>

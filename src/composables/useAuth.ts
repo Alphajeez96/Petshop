@@ -21,7 +21,6 @@ export const useAuthentication = () => {
     isLoggingOut.value = true
     const { logUserOut } = authApi()
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     logUserOut()
       .then((_response) => {
         logout()

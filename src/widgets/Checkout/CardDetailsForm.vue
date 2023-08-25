@@ -2,6 +2,8 @@
   <section>
     <h5 class="text-xl text-[#000000de] font-medium mt-16">Card details</h5>
 
+    deets: {{ paymentDetails }}
+
     <div class="mt-10">
       <!-- Credit card number -->
       <div class="form-group flex gap-8">
@@ -23,5 +25,8 @@
 </template>
 
 <script setup lang="ts">
+import { useCheckoutStore } from '@/stores/checkout'
 import TextInput from '@/components/TextInput/index.vue'
+
+const { paymentDetails } = useCheckoutStore()
 </script>

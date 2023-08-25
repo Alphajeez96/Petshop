@@ -27,3 +27,10 @@ export interface Address {
   zip: string
   country: string
 }
+
+export interface Payment {
+  details: {
+    [key: string]: string | boolean
+  }
+  type: string
+}

@@ -5,10 +5,19 @@ import { type Product } from '@/types/products'
 export const useCartStore = defineStore(
   'cartStore',
   () => {
+    const deliveryCharge: number = 25
     const cart: Ref<Product[]> = ref([])
 
+    /* COMPUTED PROPERTIES HERE */
     const cartSize = computed<number>(() => cart.value.length || 0)
+    const subTotalCartValue = computed<number>(() => {
+      return cart.value.reduce((total, product) => {
+        return total + +product.price * product.quantity!
+      }, 0)
+    })
+    const totalCartValue = computed<number>(() => subTotalCartValue.value + deliveryCharge)
 
+    /* ACTIONS HERE */
     const findProductInCart = (uuid: string) => cart.value.find((item) => item.uuid === uuid)
 
     const addToCart = (product: Product, quantity: number = 1) => {
@@ -52,7 +61,10 @@ export const useCartStore = defineStore(
       updateQuantity,
       findProductInCart,
       cartSize,
-      clearCart
+      clearCart,
+      deliveryCharge,
+      subTotalCartValue,
+      totalCartValue
     }
   },
 

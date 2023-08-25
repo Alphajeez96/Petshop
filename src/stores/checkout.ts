@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import { computed, ref, reactive, watch, type Ref } from 'vue'
-import { type Address, type Checkout } from '@/types/checkout'
+import { ref, reactive, watch, type Ref } from 'vue'
+import { type Address, type Payment, type Checkout } from '@/types/checkout'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export const useCheckoutStore = defineStore(
   'checkoutStore',
@@ -18,6 +20,7 @@ export const useCheckoutStore = defineStore(
 
     const isShippingSame: Ref<boolean> = ref(false)
     const isPaymentSame: Ref<boolean> = ref(false)
+    const paymentDetails: Payment['details'] = reactive({})
     const shippingAddress: Address = reactive({ ...addressObject })
     const billingAddress: Address = reactive({ ...addressObject })
 
@@ -33,6 +36,19 @@ export const useCheckoutStore = defineStore(
       }
     })
 
+    const addressValidation = {
+      firstName: { required },
+      lastName: { required },
+      addressLine1: { required },
+      city: { required },
+      state: { required },
+      zip: { required },
+      country: { required }
+    }
+
+    const shippingAddressValidations = useVuelidate(addressValidation, shippingAddress)
+    const billingAddressValidations = useVuelidate(addressValidation, billingAddress)
+
     const updateAddress = (target: Address, payload: Address) => {
       Object.assign(target, payload)
     }
@@ -43,7 +59,10 @@ export const useCheckoutStore = defineStore(
       isPaymentSame,
       shippingAddress,
       billingAddress,
-      updateAddress
+      paymentDetails,
+      updateAddress,
+      shippingAddressValidations,
+      billingAddressValidations
     }
   },
 

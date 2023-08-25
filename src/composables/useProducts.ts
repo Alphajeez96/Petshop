@@ -6,7 +6,7 @@ export const useFetchCategoryProducts = () => {
   const loading: Ref<boolean> = ref(false)
   const products: Ref<Product[]> = ref([])
 
-  async function fetchProductList(id: string) {
+  const fetchProductList = async (id: string) => {
     try {
       loading.value = true
       const { getProductList } = productsApi()

@@ -121,9 +121,9 @@
 
 <script setup lang="ts">
 import { toRef, onMounted } from 'vue'
+import { useCheckoutStore } from '@/stores/checkout'
 import TextInput from '@/components/TextInput/index.vue'
 import PaymentMethod from './PaymentMethod.vue'
-import { useCheckoutStore } from '@/stores/checkout'
 
 const buttonClass: string = 'h-9 rounded w-[6.875rem] box-shadow'
 const spanClass: string = 'font-medium text-sm w-full uppercase'

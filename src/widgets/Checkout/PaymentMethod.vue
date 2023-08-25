@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import IconPaymentMode from '@/components/Icons/IconPaymentMode.vue'
 import CardDetails from './CardDetailsForm.vue'
 import CashDelivery from './CashDeliveryForm.vue'
 import BankTransfer from './BankTransferForm.vue'
+import IconPaymentMode from '@/components/Icons/IconPaymentMode.vue'
 
 interface Method {
   title: string
